@@ -1,21 +1,13 @@
 import React from 'react'
-import {
-    SafeAreaView,
-    View,
-    Text,
-    StatusBar,
-} from 'react-native'
+import {Provider} from 'react-redux'
+import store from './src/Store/store'
+import ContainerApp from './src/Containers/ContainerApp'
 
 const App: React.FC = (): React.ReactElement => {
     return (
-        <>
-            <StatusBar barStyle={'light-content'} />
-            <SafeAreaView style={{backgroundColor: '#000', flex: 1}}>
-                <View style={{backgroundColor: '#000', flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{color: '#FFF'}}>Test</Text>
-                </View>
-            </SafeAreaView>
-        </>
+        <Provider store={store}>
+            <ContainerApp/>
+        </Provider>
     )
 }
 
