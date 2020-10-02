@@ -39,14 +39,14 @@ export const convertPopularMovieListResponse = (response: Models.IMovieListRespo
  * If convertation fails error is thrown
  * @param response 
  */
-export const convertPopularTVProgramListResponse = (response: Models.IPopularTVProgramListResponse): Models.IPopularTVProgramList => {
+export const convertPopularTVProgramListResponse = (response: Models.ITVProgramListResponse): Models.ITVProgramList => {
     if (
         (typeof response.page !== 'number') ||
         (typeof response.total_pages !== 'number') ||
         (!response.results || !Array.isArray(response.results)) ||
         (response.results && Array.isArray(response.results) && response.results.some((resultsItem: Models.ITVProgramResponse): boolean => {
             return (
-                (typeof resultsItem.poster_path !== 'string') ||
+                (typeof resultsItem.poster_path !== 'string' && resultsItem.poster_path !== null) ||
                 (!resultsItem.id || typeof resultsItem.id !== 'number') ||
                 (!resultsItem.name || typeof resultsItem.name !== 'string')
             )
@@ -55,7 +55,7 @@ export const convertPopularTVProgramListResponse = (response: Models.IPopularTVP
         throw new Error('Converter error')
     }
 
-    const result: Models.IPopularTVProgramList = {
+    const result: Models.ITVProgramList = {
         currentPage: response.page,
         totalPages: response.total_pages,
         tvList: response.results.map((resultItem: Models.ITVProgramResponse): Models.ITV => ({
@@ -68,10 +68,15 @@ export const convertPopularTVProgramListResponse = (response: Models.IPopularTVP
     return result
 }
 
-export const convertMovieGenreListResponse = (response: Models.IMovieGenreListResponse): Models.IMovieGenreList => {
+/**
+ * Converts result of movie genre list request to the app's internal model
+ * If convertation fails error is thrown
+ * @param response 
+ */
+export const convertMovieGenreListResponse = (response: Models.IGenreListResponse): Models.IGenreList => {
     if (
         (!response.genres || !Array.isArray(response.genres)) ||
-        (response.genres && Array.isArray(response.genres) && response.genres.some((genresItem: Models.IMovieGenreResponse): boolean => {
+        (response.genres && Array.isArray(response.genres) && response.genres.some((genresItem: Models.IGenreResponse): boolean => {
             return (
                 (typeof genresItem.name !== 'string') ||
                 (typeof genresItem.id !== 'number')
@@ -81,9 +86,9 @@ export const convertMovieGenreListResponse = (response: Models.IMovieGenreListRe
         throw new Error('Converter error')
     }
 
-    const result: Models.IMovieGenreList = {
+    const result: Models.IGenreList = {
         data: response.genres
-            ? response.genres.map((genresItem: Models.IMovieGenreResponse): Models.IMovieGenre => ({
+            ? response.genres.map((genresItem: Models.IGenreResponse): Models.IGenre => ({
                 id: genresItem.id !== undefined ? genresItem.id : 0,
                 genre: genresItem.name !== undefined ? genresItem.name : '',
             }))
@@ -91,4 +96,14 @@ export const convertMovieGenreListResponse = (response: Models.IMovieGenreListRe
     }
 
     return result
+}
+
+/**
+ * Converts result of TV program genre list request to the app's internal model
+ * If convertation fails error is thrown
+ * @param response 
+ */
+export const convertTVProgramGenreListResponse = (response: Models.IGenreListResponse): Models.IGenreList => {
+    // Reusing converter for movie genres
+    return convertMovieGenreListResponse(response)
 }

@@ -28,8 +28,31 @@ export const getCallGetMovieGenreListUrl = (): string => {
     return `${baseUrl}/genre/movie/list?api_key=${apiKey}`
 }
 
+/**
+ * Returns URL for movies by genre query
+ * @param currentPage 
+ * @param id 
+ */
 export const getCallGetMovieByGenreListUrl = (currentPage: number, id: number): string => {
     const requestPage: number = currentPage + 1
 
     return `${baseUrl}/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&page=${requestPage}&with_genres=${id}`
+}
+
+/**
+ * Returns URL for genres of TV query
+ */
+export const getCallGetTVProgramGenreListUrl = (): string => {
+    return `${baseUrl}/genre/tv/list?api_key=${apiKey}`
+}
+
+/**
+ * Returns URL for TV programs by genre query
+ * @param currentPage 
+ * @param id 
+ */
+export const getCallGetTVProgramsByGenreListUrl = (currentPage: number, id: number): string => {
+    const requestPage: number = currentPage + 1
+
+    return `${baseUrl}/discover/tv?api_key=${apiKey}&sort_by=popularity.desc&page=${requestPage}&with_genres=${id}`
 }

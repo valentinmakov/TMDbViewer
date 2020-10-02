@@ -26,9 +26,19 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
         documentaryMovies,
         documentaryMoviesPhase,
         documentaryMoviesError,
+        tvProgramGenres,
+        tvProgramGenresPhase,
+        tvProgramGenresError,
+        familyTVPrograms,
+        familyTVProgramsPhase,
+        familyTVProgramsError,
+        documentaryTVPrograms,
+        documentaryTVProgramsPhase,
+        documentaryTVProgramsError,
         performCallGetPopularMovieListRequest,
         performCallGetPopularTVProgramListRequest,
         performCallGetMovieGenreListRequest,
+        performCallGetTVProgramGenreListRequest,
     }: IAppProps
 ): React.ReactElement<IAppProps> => {
 
@@ -92,6 +102,46 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
                             ? documentaryMoviesError.message
                             : movieGenresError
                                 ? movieGenresError.message
+                                : 'No Documentary Error'
+                }
+            </Text>
+
+            {
+                familyTVPrograms && familyTVPrograms.tvList && familyTVPrograms.tvList.length > 0
+                    ? familyTVPrograms.tvList.map((tv: Models.ITV): React.ReactElement => (
+                        <Text style={{color: 'white'}} key={tv.id}>{tv.title}</Text>
+                    ))
+                    : <Text>Empty</Text>
+            }
+            <Text style={{color: 'white'}}>{familyTVProgramsPhase === 'InProgress' || tvProgramGenresPhase === 'InProgress' ? 'Fetching' : 'Done'}</Text>
+            <Text style={{color: 'white'}}>
+                {
+                    familyTVProgramsError === null && tvProgramGenresError === null
+                        ? 'No Family Error'
+                        : familyTVProgramsError
+                            ? familyTVProgramsError.message
+                            : tvProgramGenresError
+                                ? tvProgramGenresError.message
+                                : 'No Family Error'
+                }
+            </Text>
+
+            {
+                documentaryTVPrograms && documentaryTVPrograms.tvList && documentaryTVPrograms.tvList.length > 0
+                    ? documentaryTVPrograms.tvList.map((tv: Models.ITV): React.ReactElement => (
+                        <Text style={{color: 'white'}} key={tv.id}>{tv.title}</Text>
+                    ))
+                    : <Text>Empty</Text>
+            }
+            <Text style={{color: 'white'}}>{documentaryTVProgramsPhase === 'InProgress' || tvProgramGenresPhase === 'InProgress' ? 'Fetching' : 'Done'}</Text>
+            <Text style={{color: 'white'}}>
+                {
+                    documentaryTVProgramsError === null && tvProgramGenresError === null
+                        ? 'No Documentary Error'
+                        : documentaryTVProgramsError
+                            ? documentaryTVProgramsError.message
+                            : tvProgramGenresError
+                                ? tvProgramGenresError.message
                                 : 'No Documentary Error'
                 }
             </Text>

@@ -20,7 +20,19 @@ const initialState: Models.IRootState = {
 
     documentaryMovies: null,
     documentaryMoviesPhase: 'Never',
-    documentaryMoviesError: null,    
+    documentaryMoviesError: null,
+    
+    tvProgramGenres: null,
+    tvProgramGenresPhase: 'Never',
+    tvProgramGenresError: null,
+
+    familyTVPrograms: null,
+    familyTVProgramsPhase: 'Never',
+    familyTVProgramsError: null,
+
+    documentaryTVPrograms: null,
+    documentaryTVProgramsPhase: 'Never',
+    documentaryTVProgramsError: null, 
 }
 
 const rootReducer = (state: Models.IRootState = initialState, action: Models.IAction): Models.IRootState => {
@@ -56,7 +68,7 @@ const rootReducer = (state: Models.IRootState = initialState, action: Models.IAc
                 popularTVProgramsPhase: 'InProgress',
             }
         case actions.CALL_GET_POPULAR_TV_PROGRAM_LIST_SUCESS:
-            const popularTVProgramsPayload: Models.IPopularTVProgramList = action.payload as Models.IPopularTVProgramList
+            const popularTVProgramsPayload: Models.ITVProgramList = action.payload as Models.ITVProgramList
             return {
                 ...state,
                 popularTVPrograms: {
@@ -83,7 +95,7 @@ const rootReducer = (state: Models.IRootState = initialState, action: Models.IAc
         case actions.CALL_GET_MOVIE_GENRE_LIST_SUCESS:
             return {
                 ...state,
-                movieGenres: action.payload as Models.IMovieGenreList,
+                movieGenres: action.payload as Models.IGenreList,
                 movieGenresPhase: 'Success',
                 movieGenresError: null,
             }
@@ -142,6 +154,75 @@ const rootReducer = (state: Models.IRootState = initialState, action: Models.IAc
                 ...state,
                 documentaryMoviesPhase: 'Failure',
                 documentaryMoviesError: action.payload as Models.IError,
+            }
+
+            case actions.CALL_GET_TV_PROGRAM_GENRE_LIST_REQUEST:
+            return {
+                ...state,
+                tvProgramGenresPhase: 'InProgress',
+            }
+        case actions.CALL_GET_TV_PROGRAM_GENRE_LIST_SUCESS:
+            return {
+                ...state,
+                tvProgramGenres: action.payload as Models.IGenreList,
+                tvProgramGenresPhase: 'Success',
+                tvProgramGenresError: null,
+            }
+        case actions.CALL_GET_TV_PROGRAM_GENRE_LIST_FAILURE:
+            return {
+                ...state,
+                tvProgramGenresPhase: 'Failure',
+                tvProgramGenresError: action.payload as Models.IError,
+            }
+
+        case actions.CALL_GET_FAMILY_TV_PROGRAM_LIST_REQUEST:
+            return {
+                ...state,
+                familyTVProgramsPhase: 'InProgress',
+            }
+        case actions.CALL_GET_FAMILY_TV_PROGRAM_LIST_SUCESS:
+            const familyTVProgramsPayload: Models.ITVProgramList = action.payload as Models.ITVProgramList
+            return {
+                ...state,
+                familyTVPrograms: {
+                    ...state.familyTVPrograms,
+                    currentPage: familyTVProgramsPayload.currentPage,
+                    totalPages: familyTVProgramsPayload.totalPages,
+                    tvList: state.familyTVPrograms ? [...state.familyTVPrograms.tvList, ...familyTVProgramsPayload.tvList] : familyTVProgramsPayload.tvList,
+                },
+                familyTVProgramsPhase: 'Success',
+                familyTVProgramsError: null,
+            }
+        case actions.CALL_GET_FAMILY_TV_PROGRAM_LIST_FAILURE:
+            return {
+                ...state,
+                familyTVProgramsPhase: 'Failure',
+                familyTVProgramsError: action.payload as Models.IError,
+            }
+
+        case actions.CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_REQUEST:
+            return {
+                ...state,
+                documentaryTVProgramsPhase: 'InProgress',
+            }
+        case actions.CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_SUCESS:
+            const documentaryTVProgramsPayload: Models.ITVProgramList = action.payload as Models.ITVProgramList
+            return {
+                ...state,
+                documentaryTVPrograms: {
+                    ...state.documentaryTVPrograms,
+                    currentPage: documentaryTVProgramsPayload.currentPage,
+                    totalPages: documentaryTVProgramsPayload.totalPages,
+                    tvList: state.documentaryTVPrograms ? [...state.documentaryTVPrograms.tvList, ...documentaryTVProgramsPayload.tvList] : documentaryTVProgramsPayload.tvList,
+                },
+                documentaryTVProgramsPhase: 'Success',
+                documentaryTVProgramsError: null,
+            }
+        case actions.CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_FAILURE:
+            return {
+                ...state,
+                documentaryTVProgramsPhase: 'Failure',
+                documentaryTVProgramsError: action.payload as Models.IError,
             }
         default:
             return state

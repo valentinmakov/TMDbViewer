@@ -17,11 +17,11 @@ export namespace Models {
         popularMoviesPhase: Enums.NetworkCallPhase,
         popularMoviesError: IError | null,
 
-        popularTVPrograms: IPopularTVProgramList | null,
+        popularTVPrograms: ITVProgramList | null,
         popularTVProgramsPhase: Enums.NetworkCallPhase,
         popularTVProgramsError: IError | null,
 
-        movieGenres: IMovieGenreList | null,
+        movieGenres: IGenreList | null,
         movieGenresPhase: Enums.NetworkCallPhase,
         movieGenresError: IError | null,
 
@@ -32,6 +32,18 @@ export namespace Models {
         documentaryMovies: IMovieList | null,
         documentaryMoviesPhase: Enums.NetworkCallPhase,
         documentaryMoviesError: IError | null,
+
+        tvProgramGenres: IGenreList | null,
+        tvProgramGenresPhase: Enums.NetworkCallPhase,
+        tvProgramGenresError: IError | null,
+
+        familyTVPrograms: ITVProgramList | null,
+        familyTVProgramsPhase: Enums.NetworkCallPhase,
+        familyTVProgramsError: IError | null,
+
+        documentaryTVPrograms: ITVProgramList | null,
+        documentaryTVProgramsPhase: Enums.NetworkCallPhase,
+        documentaryTVProgramsError: IError | null,
     }
 
     /* START Models for Actions */
@@ -43,8 +55,8 @@ export namespace Models {
     export type IActionPayload = (
         IError |
         IMovieList |
-        IPopularTVProgramList |
-        IMovieGenreList
+        ITVProgramList |
+        IGenreList
     )
     /* END Models for Actions */
 
@@ -84,7 +96,7 @@ export namespace Models {
     /* END Models for converted /discover/movie REST response */
 
     /* START Models for /discover/tv REST response */
-    export interface IPopularTVProgramListResponse {
+    export interface ITVProgramListResponse {
         page?: number,
         total_pages?: number,
         results?: ITVProgramResponse[],
@@ -98,7 +110,7 @@ export namespace Models {
     /* END Models for /discover/tv REST response */
 
     /* START Models for converted /discover/tv REST response */
-    export interface IPopularTVProgramList {
+    export interface ITVProgramList {
         currentPage: number,
         totalPages: number,
         tvList: ITV[],
@@ -111,27 +123,27 @@ export namespace Models {
     }
     /* END Models for converted /discover/tv REST response */
 
-    /* START Models for /genre/movie/list REST response */
-    export interface IMovieGenreListResponse {
-        genres?: IMovieGenreResponse[],
+    /* START Models for /genre/movie/list and /genre/tv/list REST response */
+    export interface IGenreListResponse {
+        genres?: IGenreResponse[],
     }
 
-    export interface IMovieGenreResponse {
+    export interface IGenreResponse {
         name?: string,
         id?: number,
     }
-    /* END Models for /genre/movie/list REST response */
+    /* END Models for /genre/movie/list and /genre/tv/list REST response */
 
-    /* START Models for converted /genre/movie/list REST response */
-    export interface IMovieGenreList {
-        data: IMovieGenre[] | null,
+    /* START Models for converted /genre/movie/list and /genre/tv/list REST response */
+    export interface IGenreList {
+        data: IGenre[] | null,
     }
 
-    export interface IMovieGenre {
+    export interface IGenre {
         genre: string,
         id: number,
     }
-    /* END Models for converted /genre/movie/list REST response */
+    /* END Models for converted /genre/movie/list and /genre/tv/list REST response */
 
     // Model for query genre object
     export interface IGenreId {

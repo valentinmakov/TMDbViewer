@@ -24,9 +24,19 @@ const ContainerApp: React.FC<IAppProps> = (
         documentaryMovies,
         documentaryMoviesPhase,
         documentaryMoviesError,
+        tvProgramGenres,
+        tvProgramGenresPhase,
+        tvProgramGenresError,
+        familyTVPrograms,
+        familyTVProgramsPhase,
+        familyTVProgramsError,
+        documentaryTVPrograms,
+        documentaryTVProgramsPhase,
+        documentaryTVProgramsError,
         performCallGetPopularMovieListRequest,
         performCallGetPopularTVProgramListRequest,
         performCallGetMovieGenreListRequest,
+        performCallGetTVProgramGenreListRequest,
     }: IAppProps
 ): React.ReactElement<IAppProps> => {
     // Performs network queries on mount
@@ -34,6 +44,7 @@ const ContainerApp: React.FC<IAppProps> = (
         performCallGetPopularMovieListRequest()
         performCallGetPopularTVProgramListRequest()
         performCallGetMovieGenreListRequest()
+        performCallGetTVProgramGenreListRequest()
     }, [])
 
     return (
@@ -53,9 +64,19 @@ const ContainerApp: React.FC<IAppProps> = (
             documentaryMovies={documentaryMovies}
             documentaryMoviesPhase={documentaryMoviesPhase}
             documentaryMoviesError={documentaryMoviesError}
+            tvProgramGenres={tvProgramGenres}
+            tvProgramGenresPhase={tvProgramGenresPhase}
+            tvProgramGenresError={tvProgramGenresError}
+            familyTVPrograms={familyTVPrograms}
+            familyTVProgramsPhase={familyTVProgramsPhase}
+            familyTVProgramsError={familyTVProgramsError}
+            documentaryTVPrograms={documentaryTVPrograms}
+            documentaryTVProgramsPhase={documentaryTVProgramsPhase}
+            documentaryTVProgramsError={documentaryTVProgramsError}
             performCallGetPopularMovieListRequest={performCallGetPopularMovieListRequest}
             performCallGetPopularTVProgramListRequest={performCallGetPopularTVProgramListRequest}
             performCallGetMovieGenreListRequest={performCallGetMovieGenreListRequest}
+            performCallGetTVProgramGenreListRequest={performCallGetTVProgramGenreListRequest}
         />
     )
 }
@@ -65,11 +86,11 @@ interface IStateProps {
     popularMoviesPhase: Enums.NetworkCallPhase,
     popularMoviesError: Models.IError | null,
 
-    popularTVPrograms: Models.IPopularTVProgramList | null,
+    popularTVPrograms: Models.ITVProgramList | null,
     popularTVProgramsPhase: Enums.NetworkCallPhase,
     popularTVProgramsError: Models.IError | null,
 
-    movieGenres: Models.IMovieGenreList | null,
+    movieGenres: Models.IGenreList | null,
     movieGenresPhase: Enums.NetworkCallPhase,
     movieGenresError: Models.IError | null,
 
@@ -80,12 +101,25 @@ interface IStateProps {
     documentaryMovies: Models.IMovieList | null,
     documentaryMoviesPhase: Enums.NetworkCallPhase,
     documentaryMoviesError: Models.IError | null,
+
+    tvProgramGenres: Models.IGenreList | null,
+    tvProgramGenresPhase: Enums.NetworkCallPhase,
+    tvProgramGenresError: Models.IError | null,
+
+    familyTVPrograms: Models.ITVProgramList | null,
+    familyTVProgramsPhase: Enums.NetworkCallPhase,
+    familyTVProgramsError: Models.IError | null,
+    
+    documentaryTVPrograms: Models.ITVProgramList | null,
+    documentaryTVProgramsPhase: Enums.NetworkCallPhase,
+    documentaryTVProgramsError: Models.IError | null,
 }
 
 interface IDispatchProps {
     performCallGetPopularMovieListRequest: () => void,
     performCallGetPopularTVProgramListRequest: () => void,
     performCallGetMovieGenreListRequest: () => void,
+    performCallGetTVProgramGenreListRequest: () => void,
 }
 
 export type IAppProps = IStateProps & IDispatchProps
@@ -110,12 +144,25 @@ const mapStateToProps = (state: Models.IRootState): IStateProps => ({
     documentaryMovies: state.documentaryMovies,
     documentaryMoviesPhase: state.documentaryMoviesPhase,
     documentaryMoviesError: state.documentaryMoviesError,
+
+    tvProgramGenres: state.tvProgramGenres,
+    tvProgramGenresPhase: state.tvProgramGenresPhase,
+    tvProgramGenresError: state.tvProgramGenresError,
+
+    familyTVPrograms: state.familyTVPrograms,
+    familyTVProgramsPhase: state.familyTVProgramsPhase,
+    familyTVProgramsError: state.familyTVProgramsError,
+
+    documentaryTVPrograms: state.documentaryTVPrograms,
+    documentaryTVProgramsPhase: state.documentaryTVProgramsPhase,
+    documentaryTVProgramsError: state.documentaryTVProgramsError,
 })
 
 const mapDispatchToProps = (dispatch: Function): IDispatchProps => ({
     performCallGetPopularMovieListRequest: () => dispatch(actions.performCallGetPopularMovieListRequest()),
     performCallGetPopularTVProgramListRequest: () => dispatch(actions.performCallGetPopularTVProgramListRequest()),
     performCallGetMovieGenreListRequest: () => dispatch(actions.performCallGetMovieGenreListRequest()),
+    performCallGetTVProgramGenreListRequest: () => dispatch(actions.performCallGetTVProgramGenreListRequest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerApp)
