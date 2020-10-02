@@ -14,7 +14,11 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
         popularMovies,
         popularMoviesPhase,
         popularMoviesError,
+        popularTVPrograms,
+        popularTVProgramsPhase,
+        popularTVProgramsError,
         performCallGetPopularMovieListRequest,
+        performCallGetPopularTVProgramListRequest,
     }: IAppProps
 ): React.ReactElement<IAppProps> => {
 
@@ -31,6 +35,16 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
             }
             <Text style={{color: 'white'}}>{popularMoviesPhase === 'InProgress' ? 'Fetching' : 'Done'}</Text>
             <Text style={{color: 'white'}}>{popularMoviesError === null ? 'No Error' : popularMoviesError.message}</Text>
+
+            {
+                popularTVPrograms && popularTVPrograms.tvList && popularTVPrograms.tvList.length > 0
+                    ? popularTVPrograms.tvList.map((tv: Models.ITV): React.ReactElement => (
+                        <Text style={{color: 'white'}} key={tv.id}>{tv.title}</Text>
+                    ))
+                    : <Text>Empty</Text>
+            }
+            <Text style={{color: 'white'}}>{popularTVProgramsPhase === 'InProgress' ? 'Fetching' : 'Done'}</Text>
+            <Text style={{color: 'white'}}>{popularTVProgramsError === null ? 'No Error' : popularTVProgramsError.message}</Text>
         </View>
     );
 };

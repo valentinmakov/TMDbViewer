@@ -10,3 +10,13 @@ export const getCallGetPopularMovieListUrl = (currentPage: number): string => {
 
     return `${baseUrl}/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&page=${requestPage}`
 }
+
+/**
+ * Returns URL for popular TV programs query
+ * @param currentPage 
+ */
+export const getCallGetPopularTVProgramListUrl = (currentPage: number): string => {
+    const requestPage: number = currentPage + 1
+
+    return `${baseUrl}/discover/tv?api_key=${apiKey}&sort_by=popularity.desc&page=${requestPage}`
+}

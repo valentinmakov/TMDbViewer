@@ -11,6 +11,10 @@ export namespace Models {
         popularMovies: IPopularMovieList | null,
         popularMoviesPhase: Enums.NetworkCallPhase,
         popularMoviesError: IError | null,
+
+        popularTVPrograms: IPopularTVProgramList | null,
+        popularTVProgramsPhase: Enums.NetworkCallPhase,
+        popularTVProgramsError: IError | null,
     }
 
     /* START Models for Actions */
@@ -21,7 +25,8 @@ export namespace Models {
 
     export type IActionPayload = (
         IError |
-        IPopularMovieList
+        IPopularMovieList |
+        IPopularTVProgramList
     )
     /* END Models for Actions */
 
@@ -59,4 +64,32 @@ export namespace Models {
         title: string,
     }
     /* END Models for converted /discover/movie REST response */
+
+    /* START Models for /discover/tv REST response */
+    export interface IPopularTVProgramListResponse {
+        page?: number,
+        total_pages?: number,
+        results?: ITVProgramResponse[],
+    }
+
+    export interface ITVProgramResponse {
+        id?: number,
+        name?: string,
+        poster_path?: string | null,
+    }
+    /* END Models for /discover/tv REST response */
+
+    /* START Models for converted /discover/tv REST response */
+    export interface IPopularTVProgramList {
+        currentPage: number,
+        totalPages: number,
+        tvList: ITV[],
+    }
+
+    export interface ITV {
+        id: number,
+        imageUrl: string | null,
+        title: string,
+    }
+    /* END Models for converted /discover/tv REST response */
 }
