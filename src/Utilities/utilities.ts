@@ -20,3 +20,16 @@ export const getCallGetPopularTVProgramListUrl = (currentPage: number): string =
 
     return `${baseUrl}/discover/tv?api_key=${apiKey}&sort_by=popularity.desc&page=${requestPage}`
 }
+
+/**
+ * Returns URL for genres of movies query
+ */
+export const getCallGetMovieGenreListUrl = (): string => {
+    return `${baseUrl}/genre/movie/list?api_key=${apiKey}`
+}
+
+export const getCallGetMovieByGenreListUrl = (currentPage: number, id: number): string => {
+    const requestPage: number = currentPage + 1
+
+    return `${baseUrl}/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&page=${requestPage}&with_genres=${id}`
+}

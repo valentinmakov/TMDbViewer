@@ -40,7 +40,7 @@ const ContainerApp: React.FC<IAppProps> = (
 }
 
 interface IStateProps {
-    popularMovies: Models.IPopularMovieList | null,
+    popularMovies: Models.IMovieList | null,
     popularMoviesPhase: Enums.NetworkCallPhase,
     popularMoviesError: Models.IError | null,
 
