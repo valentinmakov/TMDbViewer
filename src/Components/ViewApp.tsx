@@ -17,8 +17,18 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
         popularTVPrograms,
         popularTVProgramsPhase,
         popularTVProgramsError,
+        movieGenres,
+        movieGenresPhase,
+        movieGenresError,
+        familyMovies,
+        familyMoviesPhase,
+        familyMoviesError,
+        documentaryMovies,
+        documentaryMoviesPhase,
+        documentaryMoviesError,
         performCallGetPopularMovieListRequest,
         performCallGetPopularTVProgramListRequest,
+        performCallGetMovieGenreListRequest,
     }: IAppProps
 ): React.ReactElement<IAppProps> => {
 
@@ -45,6 +55,46 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
             }
             <Text style={{color: 'white'}}>{popularTVProgramsPhase === 'InProgress' ? 'Fetching' : 'Done'}</Text>
             <Text style={{color: 'white'}}>{popularTVProgramsError === null ? 'No Error' : popularTVProgramsError.message}</Text>
+
+            {
+                familyMovies && familyMovies.movieList && familyMovies.movieList.length > 0
+                    ? familyMovies.movieList.map((movie: Models.IMovie): React.ReactElement => (
+                        <Text style={{color: 'white'}} key={movie.id}>{movie.title}</Text>
+                    ))
+                    : <Text>Empty</Text>
+            }
+            <Text style={{color: 'white'}}>{familyMoviesPhase === 'InProgress' || movieGenresPhase === 'InProgress' ? 'Fetching' : 'Done'}</Text>
+            <Text style={{color: 'white'}}>
+                {
+                    familyMoviesError === null && movieGenresError === null
+                        ? 'No Family Error'
+                        : familyMoviesError
+                            ? familyMoviesError.message
+                            : movieGenresError
+                                ? movieGenresError.message
+                                : 'No Family Error'
+                }
+            </Text>
+
+            {
+                documentaryMovies && documentaryMovies.movieList && documentaryMovies.movieList.length > 0
+                    ? documentaryMovies.movieList.map((movie: Models.IMovie): React.ReactElement => (
+                        <Text style={{color: 'white'}} key={movie.id}>{movie.title}</Text>
+                    ))
+                    : <Text>Empty</Text>
+            }
+            <Text style={{color: 'white'}}>{documentaryMoviesPhase === 'InProgress' || movieGenresPhase === 'InProgress' ? 'Fetching' : 'Done'}</Text>
+            <Text style={{color: 'white'}}>
+                {
+                    documentaryMoviesError === null && movieGenresError === null
+                        ? 'No Documentary Error'
+                        : documentaryMoviesError
+                            ? documentaryMoviesError.message
+                            : movieGenresError
+                                ? movieGenresError.message
+                                : 'No Documentary Error'
+                }
+            </Text>
         </View>
     );
 };

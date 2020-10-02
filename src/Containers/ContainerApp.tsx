@@ -15,14 +15,25 @@ const ContainerApp: React.FC<IAppProps> = (
         popularTVPrograms,
         popularTVProgramsPhase,
         popularTVProgramsError,
+        movieGenres,
+        movieGenresPhase,
+        movieGenresError,
+        familyMovies,
+        familyMoviesPhase,
+        familyMoviesError,
+        documentaryMovies,
+        documentaryMoviesPhase,
+        documentaryMoviesError,
         performCallGetPopularMovieListRequest,
         performCallGetPopularTVProgramListRequest,
+        performCallGetMovieGenreListRequest,
     }: IAppProps
 ): React.ReactElement<IAppProps> => {
     // Performs network queries on mount
     useEffect(() => {
         performCallGetPopularMovieListRequest()
         performCallGetPopularTVProgramListRequest()
+        performCallGetMovieGenreListRequest()
     }, [])
 
     return (
@@ -33,8 +44,18 @@ const ContainerApp: React.FC<IAppProps> = (
             popularTVPrograms={popularTVPrograms}
             popularTVProgramsPhase={popularTVProgramsPhase}
             popularTVProgramsError={popularTVProgramsError}
+            movieGenres={movieGenres}
+            movieGenresPhase={movieGenresPhase}
+            movieGenresError={movieGenresError}
+            familyMovies={familyMovies}
+            familyMoviesPhase={familyMoviesPhase}
+            familyMoviesError={familyMoviesError}
+            documentaryMovies={documentaryMovies}
+            documentaryMoviesPhase={documentaryMoviesPhase}
+            documentaryMoviesError={documentaryMoviesError}
             performCallGetPopularMovieListRequest={performCallGetPopularMovieListRequest}
             performCallGetPopularTVProgramListRequest={performCallGetPopularTVProgramListRequest}
+            performCallGetMovieGenreListRequest={performCallGetMovieGenreListRequest}
         />
     )
 }
@@ -47,11 +68,24 @@ interface IStateProps {
     popularTVPrograms: Models.IPopularTVProgramList | null,
     popularTVProgramsPhase: Enums.NetworkCallPhase,
     popularTVProgramsError: Models.IError | null,
+
+    movieGenres: Models.IMovieGenreList | null,
+    movieGenresPhase: Enums.NetworkCallPhase,
+    movieGenresError: Models.IError | null,
+
+    familyMovies: Models.IMovieList | null,
+    familyMoviesPhase: Enums.NetworkCallPhase,
+    familyMoviesError: Models.IError | null,
+    
+    documentaryMovies: Models.IMovieList | null,
+    documentaryMoviesPhase: Enums.NetworkCallPhase,
+    documentaryMoviesError: Models.IError | null,
 }
 
 interface IDispatchProps {
     performCallGetPopularMovieListRequest: () => void,
     performCallGetPopularTVProgramListRequest: () => void,
+    performCallGetMovieGenreListRequest: () => void,
 }
 
 export type IAppProps = IStateProps & IDispatchProps
@@ -64,11 +98,24 @@ const mapStateToProps = (state: Models.IRootState): IStateProps => ({
     popularTVPrograms: state.popularTVPrograms,
     popularTVProgramsPhase: state.popularTVProgramsPhase,
     popularTVProgramsError: state.popularTVProgramsError,
+
+    movieGenres: state.movieGenres,
+    movieGenresPhase: state.movieGenresPhase,
+    movieGenresError: state.movieGenresError,
+
+    familyMovies: state.familyMovies,
+    familyMoviesPhase: state.familyMoviesPhase,
+    familyMoviesError: state.familyMoviesError,
+
+    documentaryMovies: state.documentaryMovies,
+    documentaryMoviesPhase: state.documentaryMoviesPhase,
+    documentaryMoviesError: state.documentaryMoviesError,
 })
 
 const mapDispatchToProps = (dispatch: Function): IDispatchProps => ({
     performCallGetPopularMovieListRequest: () => dispatch(actions.performCallGetPopularMovieListRequest()),
     performCallGetPopularTVProgramListRequest: () => dispatch(actions.performCallGetPopularTVProgramListRequest()),
+    performCallGetMovieGenreListRequest: () => dispatch(actions.performCallGetMovieGenreListRequest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerApp)
