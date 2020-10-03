@@ -13,7 +13,7 @@ export const convertPopularMovieListResponse = (response: Models.IMovieListRespo
         (!response.results || !Array.isArray(response.results)) ||
         (response.results && Array.isArray(response.results) && response.results.some((resultsItem: Models.IMovieResponse): boolean => {
             return (
-                (typeof resultsItem.poster_path !== 'string') ||
+                (resultsItem.poster_path && typeof resultsItem.poster_path !== 'string') ||
                 (!resultsItem.id || typeof resultsItem.id !== 'number') ||
                 (!resultsItem.title || typeof resultsItem.title !== 'string')
             )

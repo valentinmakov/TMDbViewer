@@ -159,19 +159,58 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
                                         : 'No Documentary Error'
                         }
                     </Text> */}
+                    <Text style={styles.title}>Movies</Text>
+                    <Text style={styles.subTitle}>Most popular</Text>
                     {
                         popularMovies && imageConfig
                             ? <Carousel
                                 type={'Large'}
                                 itemList={
                                     popularMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
-                                        type: 'Large',
                                         title: movie.title,
                                         imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
                                         onPress: () => null,
                                     }))
                                 }
                                 onEndReached={() => performCallGetPopularMovieListRequest()}
+                            />
+                            : null
+                    }
+                    <Text style={styles.subTitle}>Family</Text>
+                    {
+                        familyMovies && imageConfig
+                            ? <Carousel
+                                type={'Small'}
+                                itemList={
+                                    familyMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
+                                        title: movie.title,
+                                        imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
+                                        onPress: () => null,
+                                    }))
+                                }
+                                onEndReached={() => {
+                                    const familyGenre: Models.IGenre | undefined = util.getFamilyGenreId(movieGenres)
+                                    familyGenre ? performCallGetPopularMovieListRequest(({genre: 'Family', id: familyGenre.id})) : null}
+                                }
+                            />
+                            : null
+                    }
+                    <Text style={styles.subTitle}>Documentary</Text>
+                    {
+                        documentaryMovies && imageConfig
+                            ? <Carousel
+                                type={'Small'}
+                                itemList={
+                                    documentaryMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
+                                        title: movie.title,
+                                        imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
+                                        onPress: () => null,
+                                    }))
+                                }
+                                onEndReached={() => {
+                                    const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(movieGenres)
+                                    documentaryGenre ? performCallGetPopularMovieListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
+                                }
                             />
                             : null
                     }
@@ -185,6 +224,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#000',
+    },
+    title: {
+        color: '#FFF',
+        fontSize: 26,
+        fontWeight: '800',
+        marginLeft: 14,
+        marginBottom: 25,
+    },
+    subTitle: {
+        color: '#FFF',
+        fontSize: 18,
+        fontWeight: '700',
+        marginLeft: 14,
+        marginBottom: 10,
     },
 })
 

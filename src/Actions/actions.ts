@@ -243,9 +243,7 @@ export const performCallGetMovieGenreListRequest = () => (dispatch: Function): v
                 dispatch(callGetMovieGenreListSuccess(payload))
 
                 // Calling movies of Family genre
-                const familyGenre: Models.IGenre | undefined = payload.data
-                    ? payload.data.find((genre: Models.IGenre): boolean => genre.genre.toLowerCase() === 'family')
-                    : undefined
+                const familyGenre: Models.IGenre | undefined = util.getFamilyGenreId(payload)
 
                 if (familyGenre) {
                     dispatch(performCallGetPopularMovieListRequest({genre: 'Family', id: familyGenre.id}))
@@ -254,9 +252,7 @@ export const performCallGetMovieGenreListRequest = () => (dispatch: Function): v
                 }
 
                 // Calling movies of Documentary genre
-                const documentaryGenre: Models.IGenre | undefined = payload.data
-                    ? payload.data.find((genre: Models.IGenre): boolean => genre.genre.toLowerCase() === 'documentary')
-                    : undefined
+                const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(payload)
 
                 if (documentaryGenre) {
                     dispatch(performCallGetPopularMovieListRequest({genre: 'Documentary', id: documentaryGenre.id}))

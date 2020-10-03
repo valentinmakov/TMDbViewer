@@ -129,8 +129,8 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-    performCallGetPopularMovieListRequest: () => void,
-    performCallGetPopularTVProgramListRequest: () => void,
+    performCallGetPopularMovieListRequest: (genreId?: Models.IGenreId) => void,
+    performCallGetPopularTVProgramListRequest: (genreId?: Models.IGenreId) => void,
     performCallGetMovieGenreListRequest: () => void,
     performCallGetTVProgramGenreListRequest: () => void,
     performCallGetImageConfigRequest: () => void,
@@ -177,8 +177,8 @@ const mapStateToProps = (state: Models.IRootState): IStateProps => ({
 })
 
 const mapDispatchToProps = (dispatch: Function): IDispatchProps => ({
-    performCallGetPopularMovieListRequest: () => dispatch(actions.performCallGetPopularMovieListRequest()),
-    performCallGetPopularTVProgramListRequest: () => dispatch(actions.performCallGetPopularTVProgramListRequest()),
+    performCallGetPopularMovieListRequest: (genreId?: Models.IGenreId) => dispatch(actions.performCallGetPopularMovieListRequest(genreId ? genreId : undefined)),
+    performCallGetPopularTVProgramListRequest: (genreId?: Models.IGenreId) => dispatch(actions.performCallGetPopularTVProgramListRequest(genreId ? genreId : undefined)),
     performCallGetMovieGenreListRequest: () => dispatch(actions.performCallGetMovieGenreListRequest()),
     performCallGetTVProgramGenreListRequest: () => dispatch(actions.performCallGetTVProgramGenreListRequest()),
     performCallGetImageConfigRequest: () => dispatch(actions.performCallGetImageConfigRequest()),

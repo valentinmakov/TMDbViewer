@@ -153,6 +153,36 @@ export const getImageWidthId = (
     return imageCarouselLargeWidthId ? imageCarouselLargeWidthId : ''
 }
 
+/**
+ * Returns URL for a single image
+ * @param imageBaseUrl 
+ * @param imageWidthId 
+ * @param imageUrl 
+ */
 export const getImageUrl = (imageBaseUrl: string, imageWidthId: string, imageUrl: string): string => {
     return `${imageBaseUrl}${imageWidthId}${imageUrl}`
+}
+
+/**
+ * Returns object representing Family genre
+ * @param genreList
+ */
+export const getFamilyGenreId = (genreList: Models.IGenreList | null): Models.IGenre | undefined => {
+    if (!genreList || !genreList.data || genreList.data.length === 0) {
+        return undefined
+    }
+
+    return genreList.data.find((genre: Models.IGenre): boolean => genre.genre.toLowerCase() === 'family')
+}
+
+/**
+ * Returns object representing Documentary genre
+ * @param genreList
+ */
+export const getDocumentaryGenreId = (genreList: Models.IGenreList | null): Models.IGenre | undefined => {
+    if (!genreList || !genreList.data || genreList.data.length === 0) {
+        return undefined
+    }
+
+    return genreList.data.find((genre: Models.IGenre): boolean => genre.genre.toLowerCase() === 'documentary')
 }
