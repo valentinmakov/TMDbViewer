@@ -34,6 +34,10 @@ export const CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_REQUEST = 'CALL_GET_DOCUMENTAR
 export const CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_SUCESS = 'CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_SUCESS'
 export const CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_FAILURE = 'CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_FAILURE'
 
+export const CALL_GET_IMAGE_CONFIG_REQUEST = 'CALL_GET_IMAGE_CONFIG_REQUEST'
+export const CALL_GET_IMAGE_CONFIG_SUCESS = 'CALL_GET_IMAGE_CONFIG_SUCESS'
+export const CALL_GET_IMAGE_CONFIG_FAILURE = 'CALL_GET_IMAGE_CONFIG_FAILURE'
+
 /* START Popular movies actions */
 
 /**
@@ -406,3 +410,43 @@ const callGetDocumentaryTVProgramListFailure = (payload: Models.IError): Models.
     payload,
 })
 /* END Documentary TV programs actions */
+
+/* START Image configuration actions */
+
+/**
+ * Starts query for image configuration
+ */
+export const performCallGetImageConfigRequest = () => (dispatch: Function): void => {
+    dispatch(callGetImageConfigRequest())
+
+    fetch(util.getCallGetImageConfigUrl(), {method: 'GET'})
+        .then((response: Response): Promise<any> => response.json())
+        .then((json: any): void => {
+            // Here we try to convert response to the app's internal model
+            // If response is invalid and converation failed error will be passed to the catch block
+            try {
+                const payload: Models.IImageConfig = converters.convertImageConfigResponse(json)
+                dispatch(callGetImageConfigSuccess(payload))
+            } catch(error: any) {
+                dispatch(callGetImageConfigFailure({message: `Image configuration converter error`}))
+            }
+        })
+        .catch((error: any): void => {
+            dispatch(callGetImageConfigFailure(error))
+        })
+}
+
+const callGetImageConfigRequest = (): Models.IAction => ({
+    type: CALL_GET_IMAGE_CONFIG_REQUEST,
+})
+
+const callGetImageConfigSuccess = (payload: Models.IImageConfig): Models.IAction => ({
+    type: CALL_GET_IMAGE_CONFIG_SUCESS,
+    payload,
+})
+
+const callGetImageConfigFailure = (payload: Models.IError): Models.IAction => ({
+    type: CALL_GET_IMAGE_CONFIG_FAILURE,
+    payload,
+})
+/* END Image configuration actions */

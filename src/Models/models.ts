@@ -8,6 +8,11 @@ export namespace Enums {
     export type GenreType = (
         'Family' | 'Documentary'
     )
+
+    // Variants of image size
+    export type ImageSizeType = (
+        'CarouselBig' | 'CarouselSmall' | 'Details'
+    )
 }
 
 export namespace Models {
@@ -44,6 +49,10 @@ export namespace Models {
         documentaryTVPrograms: ITVProgramList | null,
         documentaryTVProgramsPhase: Enums.NetworkCallPhase,
         documentaryTVProgramsError: IError | null,
+
+        imageConfig: IImageConfig | null,
+        imageConfigPhase: Enums.NetworkCallPhase,
+        imageConfigError: IError | null,
     }
 
     /* START Models for Actions */
@@ -56,7 +65,8 @@ export namespace Models {
         IError |
         IMovieList |
         ITVProgramList |
-        IGenreList
+        IGenreList |
+        IImageConfig
     )
     /* END Models for Actions */
 
@@ -150,4 +160,24 @@ export namespace Models {
         genre: Enums.GenreType,
         id: number,
     }
+
+    /* START Models for /configuration REST response */
+    export interface IImageConfigResponse {
+        images?: IImageConfigDataResponse,
+    }
+
+    export interface IImageConfigDataResponse {
+        secure_base_url?: string,
+        poster_sizes?: string[],
+    }
+    /* END Models for /configuration REST response */
+
+    /* START Models for converted /configuration REST response */
+    export interface IImageConfig {
+        imageBaseUrl: string,
+        imageCarouselLargeWidthId: string,
+        imageCarouselSmallWidthId: string,
+        imageDetailsWidthId: string,
+    }
+    /* END Models for converted /configuration REST response */
 }

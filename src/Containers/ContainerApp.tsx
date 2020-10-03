@@ -33,10 +33,14 @@ const ContainerApp: React.FC<IAppProps> = (
         documentaryTVPrograms,
         documentaryTVProgramsPhase,
         documentaryTVProgramsError,
+        imageConfig,
+        imageConfigPhase,
+        imageConfigError,
         performCallGetPopularMovieListRequest,
         performCallGetPopularTVProgramListRequest,
         performCallGetMovieGenreListRequest,
         performCallGetTVProgramGenreListRequest,
+        performCallGetImageConfigRequest,
     }: IAppProps
 ): React.ReactElement<IAppProps> => {
     // Performs network queries on mount
@@ -45,6 +49,7 @@ const ContainerApp: React.FC<IAppProps> = (
         performCallGetPopularTVProgramListRequest()
         performCallGetMovieGenreListRequest()
         performCallGetTVProgramGenreListRequest()
+        performCallGetImageConfigRequest()
     }, [])
 
     return (
@@ -73,10 +78,14 @@ const ContainerApp: React.FC<IAppProps> = (
             documentaryTVPrograms={documentaryTVPrograms}
             documentaryTVProgramsPhase={documentaryTVProgramsPhase}
             documentaryTVProgramsError={documentaryTVProgramsError}
+            imageConfig={imageConfig}
+            imageConfigPhase={imageConfigPhase}
+            imageConfigError={imageConfigError}
             performCallGetPopularMovieListRequest={performCallGetPopularMovieListRequest}
             performCallGetPopularTVProgramListRequest={performCallGetPopularTVProgramListRequest}
             performCallGetMovieGenreListRequest={performCallGetMovieGenreListRequest}
             performCallGetTVProgramGenreListRequest={performCallGetTVProgramGenreListRequest}
+            performCallGetImageConfigRequest={performCallGetImageConfigRequest}
         />
     )
 }
@@ -113,6 +122,10 @@ interface IStateProps {
     documentaryTVPrograms: Models.ITVProgramList | null,
     documentaryTVProgramsPhase: Enums.NetworkCallPhase,
     documentaryTVProgramsError: Models.IError | null,
+
+    imageConfig: Models.IImageConfig | null,
+    imageConfigPhase: Enums.NetworkCallPhase,
+    imageConfigError: Models.IError | null,
 }
 
 interface IDispatchProps {
@@ -120,6 +133,7 @@ interface IDispatchProps {
     performCallGetPopularTVProgramListRequest: () => void,
     performCallGetMovieGenreListRequest: () => void,
     performCallGetTVProgramGenreListRequest: () => void,
+    performCallGetImageConfigRequest: () => void,
 }
 
 export type IAppProps = IStateProps & IDispatchProps
@@ -156,6 +170,10 @@ const mapStateToProps = (state: Models.IRootState): IStateProps => ({
     documentaryTVPrograms: state.documentaryTVPrograms,
     documentaryTVProgramsPhase: state.documentaryTVProgramsPhase,
     documentaryTVProgramsError: state.documentaryTVProgramsError,
+    
+    imageConfig: state.imageConfig,
+    imageConfigPhase: state.imageConfigPhase,
+    imageConfigError: state.imageConfigError,
 })
 
 const mapDispatchToProps = (dispatch: Function): IDispatchProps => ({
@@ -163,6 +181,7 @@ const mapDispatchToProps = (dispatch: Function): IDispatchProps => ({
     performCallGetPopularTVProgramListRequest: () => dispatch(actions.performCallGetPopularTVProgramListRequest()),
     performCallGetMovieGenreListRequest: () => dispatch(actions.performCallGetMovieGenreListRequest()),
     performCallGetTVProgramGenreListRequest: () => dispatch(actions.performCallGetTVProgramGenreListRequest()),
+    performCallGetImageConfigRequest: () => dispatch(actions.performCallGetImageConfigRequest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerApp)

@@ -1,4 +1,5 @@
 import {Models} from '../Models/models'
+import * as util from '../Utilities/utilities'
 
 /**
  * Converts result of popular movies request to the app's internal model
@@ -106,4 +107,37 @@ export const convertMovieGenreListResponse = (response: Models.IGenreListRespons
 export const convertTVProgramGenreListResponse = (response: Models.IGenreListResponse): Models.IGenreList => {
     // Reusing converter for movie genres
     return convertMovieGenreListResponse(response)
+}
+
+/**
+ * Converts result of image configuration request to the app's internal model
+ * If convertation fails error is thrown
+ * @param response 
+ */
+export const convertImageConfigResponse = (response: Models.IImageConfigResponse): Models.IImageConfig => {
+    if (
+        !response.images ||
+        typeof response.images !== 'object' ||
+        typeof response.images.secure_base_url !== 'string' ||
+        !response.images.secure_base_url.includes('https') ||
+        !Array.isArray(response.images.poster_sizes)
+    ) {
+        throw new Error('Converter error')
+    }
+
+    // Id's for image size picked based on screen dimentions
+    const screenWidth: number = util.getScreenWidth()
+    const imageWidthList: number[] = util.getImageWidthList(response.images)
+    const imageCarouselLargeWidthId: string = util.getImageWidthId(screenWidth, imageWidthList, response.images, 'CarouselBig')
+    const imageCarouselSmallWidthId: string = util.getImageWidthId(screenWidth, imageWidthList, response.images, 'CarouselSmall')
+    const imageDetailsWidthId: string = util.getImageWidthId(screenWidth, imageWidthList, response.images, 'Details')
+
+    const result: Models.IImageConfig = {
+        imageBaseUrl: response.images && response.images.secure_base_url ? response.images.secure_base_url : '',
+        imageCarouselLargeWidthId,
+        imageCarouselSmallWidthId,
+        imageDetailsWidthId,
+    }
+
+    return result
 }

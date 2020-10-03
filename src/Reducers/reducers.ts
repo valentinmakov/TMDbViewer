@@ -32,7 +32,11 @@ const initialState: Models.IRootState = {
 
     documentaryTVPrograms: null,
     documentaryTVProgramsPhase: 'Never',
-    documentaryTVProgramsError: null, 
+    documentaryTVProgramsError: null,
+
+    imageConfig: null,
+    imageConfigPhase: 'Never',
+    imageConfigError: null,
 }
 
 const rootReducer = (state: Models.IRootState = initialState, action: Models.IAction): Models.IRootState => {
@@ -156,7 +160,7 @@ const rootReducer = (state: Models.IRootState = initialState, action: Models.IAc
                 documentaryMoviesError: action.payload as Models.IError,
             }
 
-            case actions.CALL_GET_TV_PROGRAM_GENRE_LIST_REQUEST:
+        case actions.CALL_GET_TV_PROGRAM_GENRE_LIST_REQUEST:
             return {
                 ...state,
                 tvProgramGenresPhase: 'InProgress',
@@ -223,6 +227,25 @@ const rootReducer = (state: Models.IRootState = initialState, action: Models.IAc
                 ...state,
                 documentaryTVProgramsPhase: 'Failure',
                 documentaryTVProgramsError: action.payload as Models.IError,
+            }
+
+        case actions.CALL_GET_IMAGE_CONFIG_REQUEST:
+            return {
+                ...state,
+                imageConfigPhase: 'InProgress',
+            }
+        case actions.CALL_GET_IMAGE_CONFIG_SUCESS:
+            return {
+                ...state,
+                imageConfig: action.payload as Models.IImageConfig,
+                imageConfigPhase: 'Success',
+                imageConfigError: null,
+            }
+        case actions.CALL_GET_IMAGE_CONFIG_FAILURE:
+            return {
+                ...state,
+                imageConfigPhase: 'Failure',
+                imageConfigError: action.payload as Models.IError,
             }
         default:
             return state
