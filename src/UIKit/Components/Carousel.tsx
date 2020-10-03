@@ -19,16 +19,35 @@ const Carousel: React.FC<ICarouselProps> = ({type, itemList, onEndReached}: ICar
     return (
         <FlatList
             horizontal={true}
-            data={itemList}
+            data={
+                // Regular case
+                type === 'Large' || type === 'Small'
+                    ? itemList
+                    // Loading data case
+                    : [{
+                        title: '',
+                        imageSource: '',
+                        onPress: () => null,
+                    }]
+            }
             renderItem={
                 ({item}: {item: ICarouselItem}) => {
                     return (
-                        <CarouselItem
-                            type={type === 'Large' ? 'Large' : 'Small'}
-                            title={item.title}
-                            imageSource={item.imageSource}
-                            onPress={item.onPress}
-                        />
+                        // Regular case
+                        type === 'Large' || type === 'Small'
+                            ? <CarouselItem
+                                type={type === 'Large' ? 'Large' : 'Small'}
+                                title={item.title}
+                                imageSource={item.imageSource}
+                                onPress={item.onPress}
+                            />
+                            // Loading data case
+                            : <CarouselItem
+                                type={type === 'LargeShimmer' ? 'LargeShimmer' : 'SmallShimmer'}
+                                title={item.title}
+                                imageSource={item.imageSource}
+                                onPress={item.onPress}
+                            />
                     )
                 }
             }

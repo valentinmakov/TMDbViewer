@@ -1,5 +1,6 @@
 import React from 'react'
 import {
+    ActivityIndicator,
     Dimensions,
     StyleSheet,
     Text,
@@ -43,17 +44,33 @@ const getImageWidth = (imageType: Enums.CarouselItemType): number => {
 const CarouselItem: React.FC<ICarouselItemProps> = ({type, title, imageSource, onPress}: ICarouselItemProps): React.ReactElement<ICarouselItemProps> => {
     return (
         <TouchableOpacity
-            style={type === 'Large' ? styles.imageContainerLarge : styles.imageContainerSmall}
+            style={
+                type === 'Large'
+                    ? styles.imageContainerLarge
+                    : type === 'Small'
+                        ? styles.imageContainerSmall
+                        : undefined
+            }
             activeOpacity={1}
         >
-            <FastImage
-                style={[styles.image, type === 'Large' ? styles.imageLargeDimensions : styles.imageSmallDimensions]}
-                source={{uri: imageSource}}
-                resizeMode={FastImage.resizeMode.cover}
-            />
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>{title}</Text>
-            </View>
+            {
+                type === 'Large' || type === 'Small'
+                    // Regular item
+                    ? <>
+                        <FastImage
+                            style={[styles.image, type === 'Large' ? styles.imageLargeDimensions : styles.imageSmallDimensions]}
+                            source={{uri: imageSource}}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                        <View style={styles.titleContainer}>
+                            <Text style={styles.title}>{title}</Text>
+                        </View>
+                    </>
+                    // Shimmer item with Activity indicator (for loading state)
+                    : <View style={type === 'LargeShimmer' ? styles.shimmerLarge : styles.shimmerSmall}>
+                        <ActivityIndicator/>
+                    </View>
+            }
         </TouchableOpacity>
     )
 }
@@ -85,6 +102,22 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 18,
         fontWeight: '700',
+    },
+    shimmerLarge: {
+        width: Dimensions.get('screen').width,
+        height: getImageWidth('Large') * IMAGE_HEIGHT_RATIO,
+        marginVertical: IMAGE_MARGIN,
+        marginBottom: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    shimmerSmall: {
+        width: Dimensions.get('screen').width,
+        height: getImageWidth('Small') * IMAGE_HEIGHT_RATIO,
+        marginVertical: IMAGE_MARGIN,
+        marginBottom: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })
 

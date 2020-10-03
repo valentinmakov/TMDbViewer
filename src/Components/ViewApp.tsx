@@ -107,7 +107,13 @@ const renderBody = (
                         }
                         onEndReached={() => performCallGetPopularMovieListRequest()}
                     />
-                    : null
+                    : popularMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        ? <Carousel
+                            type={'LargeShimmer'}
+                            itemList={[]}
+                            onEndReached={() => null}
+                        />
+                        : null
             }
             <Text style={styles.subTitle}>Family</Text>
             {
@@ -126,7 +132,13 @@ const renderBody = (
                             familyGenre ? performCallGetPopularMovieListRequest(({genre: 'Family', id: familyGenre.id})) : null}
                         }
                     />
-                    : null
+                    : familyMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        ? <Carousel
+                            type={'SmallShimmer'}
+                            itemList={[]}
+                            onEndReached={() => null}
+                        />
+                        : null
             }
             <Text style={styles.subTitle}>Documentary</Text>
             {
@@ -145,7 +157,13 @@ const renderBody = (
                             documentaryGenre ? performCallGetPopularMovieListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
                         }
                     />
-                    : null
+                    : documentaryMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        ? <Carousel
+                            type={'SmallShimmer'}
+                            itemList={[]}
+                            onEndReached={() => null}
+                        />
+                        : null
             }
 
             {/* TV section */}
@@ -164,7 +182,13 @@ const renderBody = (
                         }
                         onEndReached={() => performCallGetPopularTVProgramListRequest()}
                     />
-                    : null
+                    : popularTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        ? <Carousel
+                            type={'LargeShimmer'}
+                            itemList={[]}
+                            onEndReached={() => null}
+                        />
+                        : null
             }
             <Text style={styles.subTitle}>Family</Text>
             {
@@ -183,7 +207,13 @@ const renderBody = (
                             familyGenre ? performCallGetPopularTVProgramListRequest(({genre: 'Family', id: familyGenre.id})) : null}
                         }
                     />
-                    : null
+                    : familyTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        ? <Carousel
+                            type={'SmallShimmer'}
+                            itemList={[]}
+                            onEndReached={() => null}
+                        />
+                        : null
             }
             <Text style={styles.subTitle}>Documentary</Text>
             {
@@ -202,7 +232,13 @@ const renderBody = (
                             documentaryGenre ? performCallGetPopularTVProgramListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
                         }
                     />
-                    : null
+                    : documentaryTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        ? <Carousel
+                            type={'SmallShimmer'}
+                            itemList={[]}
+                            onEndReached={() => null}
+                        />
+                        : null
             }
         </ScrollView>
     )
