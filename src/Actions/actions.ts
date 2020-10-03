@@ -331,9 +331,7 @@ export const performCallGetTVProgramGenreListRequest = () => (dispatch: Function
                 dispatch(callGetTVProgramGenreListSuccess(payload))
 
                 // Calling TV programs of Family genre
-                const familyGenre: Models.IGenre | undefined = payload.data
-                    ? payload.data.find((genre: Models.IGenre): boolean => genre.genre.toLowerCase() === 'family')
-                    : undefined
+                const familyGenre: Models.IGenre | undefined = util.getFamilyGenreId(payload)
 
                 if (familyGenre) {
                     dispatch(performCallGetPopularTVProgramListRequest({genre: 'Family', id: familyGenre.id}))
@@ -342,9 +340,7 @@ export const performCallGetTVProgramGenreListRequest = () => (dispatch: Function
                 }
 
                 // Calling TV programs of Documentary genre
-                const documentaryGenre: Models.IGenre | undefined = payload.data
-                    ? payload.data.find((genre: Models.IGenre): boolean => genre.genre.toLowerCase() === 'documentary')
-                    : undefined
+                const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(payload)
 
                 if (documentaryGenre) {
                     dispatch(performCallGetPopularTVProgramListRequest({genre: 'Documentary', id: documentaryGenre.id}))

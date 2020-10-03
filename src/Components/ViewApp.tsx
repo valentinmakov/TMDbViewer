@@ -159,6 +159,7 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
                                         : 'No Documentary Error'
                         }
                     </Text> */}
+                    {/* Movies section */}
                     <Text style={styles.title}>Movies</Text>
                     <Text style={styles.subTitle}>Most popular</Text>
                     {
@@ -210,6 +211,63 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
                                 onEndReached={() => {
                                     const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(movieGenres)
                                     documentaryGenre ? performCallGetPopularMovieListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
+                                }
+                            />
+                            : null
+                    }
+
+                    {/* TV section */}
+                    <Text style={styles.title}>TV Series</Text>
+                    <Text style={styles.subTitle}>Most popular</Text>
+                    {
+                        popularTVPrograms && imageConfig
+                            ? <Carousel
+                                type={'Large'}
+                                itemList={
+                                    popularTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
+                                        title: tv.title,
+                                        imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
+                                        onPress: () => null,
+                                    }))
+                                }
+                                onEndReached={() => performCallGetPopularTVProgramListRequest()}
+                            />
+                            : null
+                    }
+                    <Text style={styles.subTitle}>Family</Text>
+                    {
+                        familyTVPrograms && imageConfig
+                            ? <Carousel
+                                type={'Small'}
+                                itemList={
+                                    familyTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
+                                        title: tv.title,
+                                        imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
+                                        onPress: () => null,
+                                    }))
+                                }
+                                onEndReached={() => {
+                                    const familyGenre: Models.IGenre | undefined = util.getFamilyGenreId(tvProgramGenres)
+                                    familyGenre ? performCallGetPopularTVProgramListRequest(({genre: 'Family', id: familyGenre.id})) : null}
+                                }
+                            />
+                            : null
+                    }
+                    <Text style={styles.subTitle}>Documentary</Text>
+                    {
+                        documentaryTVPrograms && imageConfig
+                            ? <Carousel
+                                type={'Small'}
+                                itemList={
+                                    documentaryTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
+                                        title: tv.title,
+                                        imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
+                                        onPress: () => null,
+                                    }))
+                                }
+                                onEndReached={() => {
+                                    const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(movieGenres)
+                                    documentaryGenre ? performCallGetPopularTVProgramListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
                                 }
                             />
                             : null
