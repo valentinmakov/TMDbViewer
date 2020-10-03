@@ -20,8 +20,8 @@ const Carousel: React.FC<ICarouselProps> = ({type, itemList, onEndReached}: ICar
         <FlatList
             horizontal={true}
             data={
-                // Regular case
-                type === 'Large' || type === 'Small'
+                // Regular and error cases
+                type === 'Large' || type === 'Small' || type === 'LargeError' || type === 'SmallError'
                     ? itemList
                     // Loading data case
                     : [{
@@ -42,12 +42,20 @@ const Carousel: React.FC<ICarouselProps> = ({type, itemList, onEndReached}: ICar
                                 onPress={item.onPress}
                             />
                             // Loading data case
-                            : <CarouselItem
-                                type={type === 'LargeShimmer' ? 'LargeShimmer' : 'SmallShimmer'}
-                                title={item.title}
-                                imageSource={item.imageSource}
-                                onPress={item.onPress}
-                            />
+                            : type === 'LargeShimmer' || type === 'SmallShimmer'
+                                ? <CarouselItem
+                                    type={type === 'LargeShimmer' ? 'LargeShimmer' : 'SmallShimmer'}
+                                    title={item.title}
+                                    imageSource={item.imageSource}
+                                    onPress={item.onPress}
+                                />
+                                // Error case
+                                : <CarouselItem
+                                    type={type === 'LargeError' ? 'LargeError' : 'SmallError'}
+                                    title={item.title}
+                                    imageSource={item.imageSource}
+                                    onPress={item.onPress}
+                                />
                     )
                 }
             }

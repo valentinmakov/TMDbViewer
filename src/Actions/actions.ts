@@ -59,6 +59,16 @@ export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId)
         fetch(util.getCallGetPopularMovieListUrl(currentPage), {method: 'GET'})
             .then((response: Response): Promise<any> => response.json())
             .then((json: any): void => {
+                // If falsy answer returns error is dispatched
+                if (json.success === false) {
+                    const error: Models.IError = {
+                        code: json.status_code ? json.status_code : undefined,
+                        message: json.status_message ? `Popular movies error: ${json.status_message}` : '',
+                    }
+
+                    dispatch(callGetPopularMovieListFailure(error))
+                    return
+                }
                 // Here we try to convert response to the app's internal model
                 // If response is invalid and converation failed error will be passed to the catch block
                 try {
@@ -86,6 +96,16 @@ export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId)
         fetch(util.getCallGetMovieByGenreListUrl(currentPage, genreId.id), {method: 'GET'})
             .then((response: Response): Promise<any> => response.json())
             .then((json: any): void => {
+                // If falsy answer returns error is dispatched
+                if (json.success === false) {
+                    const error: Models.IError = {
+                        code: json.status_code ? json.status_code : undefined,
+                        message: json.status_message ? `Family movies error: ${json.status_message}` : '',
+                    }
+
+                    dispatch(callGetFamilyMovieListFailure(error))
+                    return
+                }
                 // Here we try to convert response to the app's internal model
                 // If response is invalid and converation failed error will be passed to the catch block
                 try {
@@ -113,6 +133,16 @@ export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId)
         fetch(util.getCallGetMovieByGenreListUrl(currentPage, genreId.id), {method: 'GET'})
             .then((response: Response): Promise<any> => response.json())
             .then((json: any): void => {
+                // If falsy answer returns error is dispatched
+                if (json.success === false) {
+                    const error: Models.IError = {
+                        code: json.status_code ? json.status_code : undefined,
+                        message: json.status_message ? `Documentary movies error: ${json.status_message}` : '',
+                    }
+
+                    dispatch(callGetDocumentaryMovieListFailure(error))
+                    return
+                }
                 // Here we try to convert response to the app's internal model
                 // If response is invalid and converation failed error will be passed to the catch block
                 try {
@@ -165,6 +195,16 @@ export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenr
         fetch(util.getCallGetPopularTVProgramListUrl(currentPage), {method: 'GET'})
             .then((response: Response): Promise<any> => response.json())
             .then((json: any): void => {
+                // If falsy answer returns error is dispatched
+                if (json.success === false) {
+                    const error: Models.IError = {
+                        code: json.status_code ? json.status_code : undefined,
+                        message: json.status_message ? `Popular TV programs error: ${json.status_message}` : '',
+                    }
+
+                    dispatch(callGetPopularTVProgramListFailure(error))
+                    return
+                }
                 // Here we try to convert response to the app's internal model
                 // If response is invalid and converation failed error will be passed to the catch block
                 try {
@@ -192,6 +232,16 @@ export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenr
         fetch(util.getCallGetTVProgramsByGenreListUrl(currentPage, genreId.id), {method: 'GET'})
             .then((response: Response): Promise<any> => response.json())
             .then((json: any): void => {
+                // If falsy answer returns error is dispatched
+                if (json.success === false) {
+                    const error: Models.IError = {
+                        code: json.status_code ? json.status_code : undefined,
+                        message: json.status_message ? `Family TV programs error: ${json.status_message}` : '',
+                    }
+
+                    dispatch(callGetFamilyTVProgramListFailure(error))
+                    return
+                }
                 // Here we try to convert response to the app's internal model
                 // If response is invalid and converation failed error will be passed to the catch block
                 try {
@@ -219,6 +269,16 @@ export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenr
         fetch(util.getCallGetTVProgramsByGenreListUrl(currentPage, genreId.id), {method: 'GET'})
             .then((response: Response): Promise<any> => response.json())
             .then((json: any): void => {
+                // If falsy answer returns error is dispatched
+                if (json.success === false) {
+                    const error: Models.IError = {
+                        code: json.status_code ? json.status_code : undefined,
+                        message: json.status_message ? `Documentary TV programs error: ${json.status_message}` : '',
+                    }
+
+                    dispatch(callGetDocumentaryTVProgramListFailure(error))
+                    return
+                }
                 // Here we try to convert response to the app's internal model
                 // If response is invalid and converation failed error will be passed to the catch block
                 try {
@@ -265,6 +325,16 @@ export const performCallGetMovieGenreListRequest = () => (dispatch: Function, ge
     fetch(util.getCallGetMovieGenreListUrl(), {method: 'GET'})
         .then((response: Response): Promise<any> => response.json())
         .then((json: any): void => {
+            // If falsy answer returns error is dispatched
+            if (json.success === false) {
+                const error: Models.IError = {
+                    code: json.status_code ? json.status_code : undefined,
+                    message: json.status_message ? `Genres of movies error: ${json.status_message}` : '',
+                }
+
+                dispatch(callGetMovieGenreListFailure(error))
+                return
+            }
             // Here we try to convert response to the app's internal model
             // If response is invalid and converation failed error will be passed to the catch block
             try {
@@ -358,6 +428,16 @@ export const performCallGetTVProgramGenreListRequest = () => (dispatch: Function
     fetch(util.getCallGetTVProgramGenreListUrl(), {method: 'GET'})
         .then((response: Response): Promise<any> => response.json())
         .then((json: any): void => {
+            // If falsy answer returns error is dispatched
+            if (json.success === false) {
+                const error: Models.IError = {
+                    code: json.status_code ? json.status_code : undefined,
+                    message: json.status_message ? `Genres of TV programs error: ${json.status_message}` : '',
+                }
+
+                dispatch(callGetTVProgramGenreListFailure(error))
+                return
+            }
             // Here we try to convert response to the app's internal model
             // If response is invalid and converation failed error will be passed to the catch block
             try {
@@ -453,6 +533,16 @@ export const performCallGetImageConfigRequest = () => (dispatch: Function, getSt
     fetch(util.getCallGetImageConfigUrl(), {method: 'GET'})
         .then((response: Response): Promise<any> => response.json())
         .then((json: any): void => {
+            // If falsy answer returns error is dispatched
+            if (json.success === false) {
+                const error: Models.IError = {
+                    code: json.status_code ? json.status_code : undefined,
+                    message: json.status_message ? `Image configuration error: ${json.status_message}` : '',
+                }
+
+                dispatch(callGetImageConfigFailure(error))
+                return
+            }
             // Here we try to convert response to the app's internal model
             // If response is invalid and converation failed error will be passed to the catch block
             try {

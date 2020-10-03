@@ -66,9 +66,13 @@ const CarouselItem: React.FC<ICarouselItemProps> = ({type, title, imageSource, o
                             <Text style={styles.title}>{title}</Text>
                         </View>
                     </>
-                    // Shimmer item with Activity indicator (for loading state)
+                    // Shimmer item with Activity indicator (for loading state) or error message
                     : <View style={type === 'LargeShimmer' ? styles.shimmerLarge : styles.shimmerSmall}>
-                        <ActivityIndicator/>
+                        {
+                            type === 'LargeShimmer' || type === 'SmallShimmer'
+                                ? <ActivityIndicator/>
+                                : <Text style={styles.title}>{title}</Text>
+                        }
                     </View>
             }
         </TouchableOpacity>

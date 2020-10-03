@@ -11,7 +11,7 @@ import {
 import {IAppProps} from '../Containers/ContainerApp'
 import {Models} from '../Models/models'
 import * as util from '../Utilities/utilities'
-import {Carousel, ICarouselItem} from '../UIKit'
+import {Carousel, ICarouselItem, ICarouselProps} from '../UIKit'
 
 /**
  * Returns true if all network are in progress or are about to start
@@ -42,11 +42,39 @@ const isEverythingLoading = (
     )
 }
 
+const getErrorMessage = (error: Models.IError): string => {
+    const code: string = error.code ? `Code: ${error.code}. ` : ''
+    const comment: string = error.comment ? ` ${error.comment}`: ''
+
+    return `${code}${error.message}${comment}`
+}
+
 const renderLoader = (): React.ReactElement<View> => {
     return (
         <View style={styles.activityIndicatorContainer}>
             <ActivityIndicator/>
         </View>
+    )
+}
+
+const renderError = (
+    error: Models.IError | null,
+    isLarge: boolean,
+): React.ReactElement<ICarouselProps> | null => {
+    if (!error) {
+        return null
+    }
+
+    return (
+        <Carousel
+            type={isLarge ? 'LargeError' : 'SmallError'}
+            itemList={[{
+                title: `${error ? getErrorMessage(error) : ''}`,
+                imageSource: '',
+                onPress: () => null,
+            }]}
+            onEndReached={() => null}
+        />
     )
 }
 
@@ -113,7 +141,9 @@ const renderBody = (
                             itemList={[]}
                             onEndReached={() => null}
                         />
-                        : null
+                        : popularMoviesError || imageConfigError
+                            ? renderError(popularMoviesError || imageConfigError, true)
+                            : null
             }
             <Text style={styles.subTitle}>Family</Text>
             {
@@ -138,7 +168,9 @@ const renderBody = (
                             itemList={[]}
                             onEndReached={() => null}
                         />
-                        : null
+                        : familyMoviesError || imageConfigError || movieGenresError
+                            ? renderError(familyMoviesError || imageConfigError || movieGenresError, false)
+                            : null
             }
             <Text style={styles.subTitle}>Documentary</Text>
             {
@@ -163,7 +195,9 @@ const renderBody = (
                             itemList={[]}
                             onEndReached={() => null}
                         />
-                        : null
+                        : documentaryMoviesError || imageConfigError || movieGenresError
+                            ? renderError(documentaryMoviesError || imageConfigError || movieGenresError, false)
+                            : null
             }
 
             {/* TV section */}
@@ -188,7 +222,9 @@ const renderBody = (
                             itemList={[]}
                             onEndReached={() => null}
                         />
-                        : null
+                        : popularTVProgramsError || imageConfigError || tvProgramGenresError
+                            ? renderError(popularTVProgramsError || imageConfigError || tvProgramGenresError, true)
+                            : null
             }
             <Text style={styles.subTitle}>Family</Text>
             {
@@ -213,7 +249,9 @@ const renderBody = (
                             itemList={[]}
                             onEndReached={() => null}
                         />
-                        : null
+                        : familyTVProgramsError || imageConfigError || tvProgramGenresError
+                            ? renderError(familyTVProgramsError || imageConfigError || tvProgramGenresError, false)
+                            : null
             }
             <Text style={styles.subTitle}>Documentary</Text>
             {
@@ -238,7 +276,9 @@ const renderBody = (
                             itemList={[]}
                             onEndReached={() => null}
                         />
-                        : null
+                        : documentaryTVProgramsError || imageConfigError || tvProgramGenresError
+                            ? renderError(documentaryTVProgramsError || imageConfigError || tvProgramGenresError, false)
+                            : null
             }
         </ScrollView>
     )
