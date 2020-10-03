@@ -46,9 +46,13 @@ export const CALL_GET_IMAGE_CONFIG_FAILURE = 'CALL_GET_IMAGE_CONFIG_FAILURE'
 export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId) => (dispatch: Function, getState: () => Models.IRootState): void => {
     // Request for general list
     if (!genreId) {
+        const rootState: Models.IRootState = getState()
+        // Cancel request if already in progress
+        if (rootState.popularMoviesPhase === 'InProgress') {
+            return
+        }
         dispatch(callGetPopularMovieListRequest())
 
-        const rootState: Models.IRootState = getState()
         const currentPage: number = rootState.popularMovies ? rootState.popularMovies.currentPage : 0
     
         // Query url formed based on the current page value
@@ -69,9 +73,13 @@ export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId)
             })
     // Request for Family genre list
     } else if (genreId.genre === 'Family') {
+        const rootState: Models.IRootState = getState()
+        // Cancel request if already in progress
+        if (rootState.familyMoviesPhase === 'InProgress') {
+            return
+        }
         dispatch(callGetFamilyMovieListRequest())
 
-        const rootState: Models.IRootState = getState()
         const currentPage: number = rootState.familyMovies ? rootState.familyMovies.currentPage : 0
     
         // Query url formed based on the current page and genre id values
@@ -92,9 +100,13 @@ export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId)
             })
     // Request for Documentary genre list
     } else if (genreId.genre === 'Documentary') {
+        const rootState: Models.IRootState = getState()
+        // Cancel request if already in progress
+        if (rootState.documentaryMoviesPhase === 'InProgress') {
+            return
+        }
         dispatch(callGetDocumentaryMovieListRequest())
 
-        const rootState: Models.IRootState = getState()
         const currentPage: number = rootState.documentaryMovies ? rootState.documentaryMovies.currentPage : 0
     
         // Query url formed based on the current page and genre id values
@@ -140,9 +152,13 @@ const callGetPopularMovieListFailure = (payload: Models.IError): Models.IAction 
 export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenreId) => (dispatch: Function, getState: () => Models.IRootState): void => {
     // Request for general list
     if (!genreId) {
+        const rootState: Models.IRootState = getState()
+        // Cancel request if already in progress
+        if (rootState.popularTVProgramsPhase === 'InProgress') {
+            return
+        }
         dispatch(callGetPopularTVProgramListRequest())
 
-        const rootState: Models.IRootState = getState()
         const currentPage: number = rootState.popularTVPrograms ? rootState.popularTVPrograms.currentPage : 0
     
         // Query url formed based on the current page value
@@ -163,9 +179,13 @@ export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenr
             })
     // Request for Family genre list
     } else if (genreId.genre === 'Family') {
+        const rootState: Models.IRootState = getState()
+        // Cancel request if already in progress
+        if (rootState.familyTVProgramsPhase === 'InProgress') {
+            return
+        }
         dispatch(callGetFamilyTVProgramListRequest())
 
-        const rootState: Models.IRootState = getState()
         const currentPage: number = rootState.familyTVPrograms ? rootState.familyTVPrograms.currentPage : 0
     
         // Query url formed based on the current page and genre id values
@@ -186,9 +206,13 @@ export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenr
             })
     // Request for Documentary genre list
     } else if (genreId.genre === 'Documentary') {
+        const rootState: Models.IRootState = getState()
+        // Cancel request if already in progress
+        if (rootState.documentaryTVProgramsPhase === 'InProgress') {
+            return
+        }
         dispatch(callGetDocumentaryTVProgramListRequest())
 
-        const rootState: Models.IRootState = getState()
         const currentPage: number = rootState.documentaryTVPrograms ? rootState.documentaryTVPrograms.currentPage : 0
     
         // Query url formed based on the current page and genre id values
@@ -230,7 +254,12 @@ const callGetPopularTVProgramListFailure = (payload: Models.IError): Models.IAct
 /**
  * Starts query for genres of movies
  */
-export const performCallGetMovieGenreListRequest = () => (dispatch: Function): void => {
+export const performCallGetMovieGenreListRequest = () => (dispatch: Function, getState: () => Models.IRootState): void => {
+    const rootState: Models.IRootState = getState()
+    // Cancel request if already in progress
+    if (rootState.movieGenresPhase === 'InProgress') {
+        return
+    }
     dispatch(callGetMovieGenreListRequest())
 
     fetch(util.getCallGetMovieGenreListUrl(), {method: 'GET'})
@@ -318,7 +347,12 @@ const callGetDocumentaryMovieListFailure = (payload: Models.IError): Models.IAct
 /**
  * Starts query for genres of TV shows
  */
-export const performCallGetTVProgramGenreListRequest = () => (dispatch: Function): void => {
+export const performCallGetTVProgramGenreListRequest = () => (dispatch: Function, getState: () => Models.IRootState): void => {
+    const rootState: Models.IRootState = getState()
+    // Cancel request if already in progress
+    if (rootState.tvProgramGenresPhase === 'InProgress') {
+        return
+    }
     dispatch(callGetTVProgramGenreListRequest())
 
     fetch(util.getCallGetTVProgramGenreListUrl(), {method: 'GET'})
@@ -408,7 +442,12 @@ const callGetDocumentaryTVProgramListFailure = (payload: Models.IError): Models.
 /**
  * Starts query for image configuration
  */
-export const performCallGetImageConfigRequest = () => (dispatch: Function): void => {
+export const performCallGetImageConfigRequest = () => (dispatch: Function, getState: () => Models.IRootState): void => {
+    const rootState: Models.IRootState = getState()
+    // Cancel request if already in progress
+    if (rootState.imageConfigPhase === 'InProgress') {
+        return
+    }
     dispatch(callGetImageConfigRequest())
 
     fetch(util.getCallGetImageConfigUrl(), {method: 'GET'})
