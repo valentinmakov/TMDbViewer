@@ -152,3 +152,7 @@ export const getImageWidthId = (
 
     return imageCarouselLargeWidthId ? imageCarouselLargeWidthId : ''
 }
+
+export const getImageUrl = (imageBaseUrl: string, imageWidthId: string, imageUrl: string): string => {
+    return `${imageBaseUrl}${imageWidthId}${imageUrl}`
+}

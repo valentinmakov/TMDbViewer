@@ -1,10 +1,13 @@
 import React from 'react'
 import {
     Text,
+    ScrollView,
     View,
 } from 'react-native'
 import {IAppProps} from '../Containers/ContainerApp'
 import {Models} from '../Models/models'
+import * as util from '../Utilities/utilities'
+import {CarouselItem, ICarouselItemProps} from '../UIKit'
 
 /**
  * Renders app's main screen
@@ -35,10 +38,14 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
         documentaryTVPrograms,
         documentaryTVProgramsPhase,
         documentaryTVProgramsError,
+        imageConfig,
+        imageConfigPhase,
+        imageConfigError,
         performCallGetPopularMovieListRequest,
         performCallGetPopularTVProgramListRequest,
         performCallGetMovieGenreListRequest,
         performCallGetTVProgramGenreListRequest,
+        performCallGetImageConfigRequest,
     }: IAppProps
 ): React.ReactElement<IAppProps> => {
 
@@ -46,7 +53,7 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
         <View
             style={{flex: 1, backgroundColor: 'black'}}
         >
-            {
+            {/* {
                 popularMovies && popularMovies.movieList && popularMovies.movieList.length > 0
                     ? popularMovies.movieList.map((movie: Models.IMovie): React.ReactElement => (
                         <Text style={{color: 'white'}} key={movie.id}>{movie.title}</Text>
@@ -144,7 +151,24 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
                                 ? tvProgramGenresError.message
                                 : 'No Documentary Error'
                 }
-            </Text>
+            </Text> */}
+            <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
+                {
+                    popularMovies && imageConfig
+                        ? popularMovies.movieList.map((movie: Models.IMovie): React.ReactElement<ICarouselItemProps> => {
+                            return (
+                                <CarouselItem
+                                    type={'Large'}
+                                    key={movie.id}
+                                    title={movie.title}
+                                    imageSource={movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : ''}
+                                    onPress={() => null}
+                                />
+                            )
+                        })
+                        : null
+                }
+            </ScrollView>
         </View>
     );
 };
