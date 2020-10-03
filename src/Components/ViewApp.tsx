@@ -7,7 +7,7 @@ import {
 import {IAppProps} from '../Containers/ContainerApp'
 import {Models} from '../Models/models'
 import * as util from '../Utilities/utilities'
-import {CarouselItem, ICarouselItemProps} from '../UIKit'
+import {Carousel, ICarouselItem} from '../UIKit'
 
 /**
  * Renders app's main screen
@@ -152,20 +152,21 @@ const ViewApp: React.FunctionComponent<IAppProps> = (
                                 : 'No Documentary Error'
                 }
             </Text> */}
-            <ScrollView horizontal={true} style={{flexDirection: 'row'}}>
+            <ScrollView style={{flexDirection: 'row'}}>
                 {
                     popularMovies && imageConfig
-                        ? popularMovies.movieList.map((movie: Models.IMovie): React.ReactElement<ICarouselItemProps> => {
-                            return (
-                                <CarouselItem
-                                    type={'Large'}
-                                    key={movie.id}
-                                    title={movie.title}
-                                    imageSource={movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : ''}
-                                    onPress={() => null}
-                                />
-                            )
-                        })
+                        ? <Carousel
+                            type={'Large'}
+                            itemList={
+                                popularMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
+                                    type: 'Large',
+                                    title: movie.title,
+                                    imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
+                                    onPress: () => null,
+                                }))
+                            }
+                            onEndReached={() => null}
+                        />
                         : null
                 }
             </ScrollView>
