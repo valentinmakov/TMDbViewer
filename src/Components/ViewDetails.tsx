@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     imageContainer: {
-        justifyContent: 'center',
+        alignItems: 'center',
     },
     image: {
         width: util.getScreenWidth(),
