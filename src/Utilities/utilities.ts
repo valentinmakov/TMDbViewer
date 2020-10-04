@@ -146,11 +146,17 @@ export const getImageWidthId = (
     const minImageWidth: number = imageWidthList.reduce((minImageWidth: number, imageWidth: number, index: number): number => {
         if (index === 0) {
             return imageWidth
-        } else {
+        } else if (index < imageWidthList.length - 1) {
             const sizeDifference: number = maxImageSize - imageWidth
 
             if (sizeDifference <= 0 && !isMinWitdthFound) {
                 isMinWitdthFound = true
+                return imageWidth
+            }
+
+            return minImageWidth
+        } else {
+            if (maxImageSize - imageWidth > 0 && !isMinWitdthFound) {
                 return imageWidth
             }
 
