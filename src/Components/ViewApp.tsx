@@ -81,7 +81,6 @@ const renderBody = (
         popularTVProgramsPhase,
         popularTVProgramsError,
         movieGenres,
-        movieGenresPhase,
         movieGenresError,
         familyMovies,
         familyMoviesPhase,
@@ -90,7 +89,6 @@ const renderBody = (
         documentaryMoviesPhase,
         documentaryMoviesError,
         tvProgramGenres,
-        tvProgramGenresPhase,
         tvProgramGenresError,
         familyTVPrograms,
         familyTVProgramsPhase,
@@ -103,9 +101,6 @@ const renderBody = (
         imageConfigError,
         performCallGetPopularMovieListRequest,
         performCallGetPopularTVProgramListRequest,
-        performCallGetMovieGenreListRequest,
-        performCallGetTVProgramGenreListRequest,
-        performCallGetImageConfigRequest,
     }: IAppProps
 ): React.ReactElement<ScrollView> => {
     return (
