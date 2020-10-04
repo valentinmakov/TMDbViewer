@@ -97,6 +97,8 @@ const CarouselItem: React.FC<ICarouselItemProps> = ({type, title, imageSource, o
                         : undefined
             }
             activeOpacity={1}
+            onPress={onPress}
+            disabled={type !== 'Large' && type !== 'Small'}
         >
             {
                 type === 'Large' || type === 'Small'

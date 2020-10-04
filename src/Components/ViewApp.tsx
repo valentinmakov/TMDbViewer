@@ -1,7 +1,6 @@
 import React from 'react'
 import {
     ActivityIndicator,
-    SafeAreaView,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -80,6 +79,7 @@ const renderError = (
 
 const renderBody = (
     {
+        navigation,
         popularMovies,
         popularMoviesPhase,
         popularMoviesError,
@@ -130,7 +130,13 @@ const renderBody = (
                             popularMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
                                 title: movie.title,
                                 imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
-                                onPress: () => null,
+                                onPress: () => navigation.navigate(
+                                    'Details',
+                                    {
+                                        id: movie.id,
+                                        title: movie.title,
+                                    }
+                                ),
                             }))
                         }
                         onEndReached={() => performCallGetPopularMovieListRequest()}
@@ -154,7 +160,13 @@ const renderBody = (
                             familyMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
                                 title: movie.title,
                                 imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
-                                onPress: () => null,
+                                onPress: () => navigation.navigate(
+                                    'Details',
+                                    {
+                                        id: movie.id,
+                                        title: movie.title,
+                                    }
+                                ),
                             }))
                         }
                         onEndReached={() => {
@@ -181,7 +193,13 @@ const renderBody = (
                             documentaryMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
                                 title: movie.title,
                                 imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
-                                onPress: () => null,
+                                onPress: () => navigation.navigate(
+                                    'Details',
+                                    {
+                                        id: movie.id,
+                                        title: movie.title,
+                                    }
+                                ),
                             }))
                         }
                         onEndReached={() => {
@@ -211,7 +229,13 @@ const renderBody = (
                             popularTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
                                 title: tv.title,
                                 imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
-                                onPress: () => null,
+                                onPress: () => navigation.navigate(
+                                    'Details',
+                                    {
+                                        id: tv.id,
+                                        title: tv.title,
+                                    }
+                                ),
                             }))
                         }
                         onEndReached={() => performCallGetPopularTVProgramListRequest()}
@@ -235,7 +259,13 @@ const renderBody = (
                             familyTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
                                 title: tv.title,
                                 imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
-                                onPress: () => null,
+                                onPress: () => navigation.navigate(
+                                    'Details',
+                                    {
+                                        id: tv.id,
+                                        title: tv.title,
+                                    }
+                                ),
                             }))
                         }
                         onEndReached={() => {
@@ -262,7 +292,13 @@ const renderBody = (
                             documentaryTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
                                 title: tv.title,
                                 imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
-                                onPress: () => null,
+                                onPress: () => navigation.navigate(
+                                    'Details',
+                                    {
+                                        id: tv.id,
+                                        title: tv.title,
+                                    }
+                                ),
                             }))
                         }
                         onEndReached={() => {
@@ -291,12 +327,11 @@ const ViewApp: React.FunctionComponent<IAppProps> = (props: IAppProps): React.Re
     return (
         <>
             <StatusBar barStyle={'light-content'} />
-            <SafeAreaView style={{backgroundColor: '#000', flex: 1}}>
-                {
-                    isEverythingLoading(props)
-                        ? renderLoader()
-                        : renderBody(props)}
-            </SafeAreaView>
+            {
+                isEverythingLoading(props)
+                    ? renderLoader()
+                    : renderBody(props)    
+            }
         </>
     )
 }

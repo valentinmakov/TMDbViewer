@@ -1,14 +1,17 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
+import {StackNavigationProp} from '@react-navigation/stack'
 import * as actions from '../Actions/actions'
 import {Enums, Models} from '../Models/models'
 import ViewApp from '../Components/ViewApp'
+import {RootStackParamList} from '../../App'
 
 /**
  * Provides container for app's main screen
  */
 const ContainerApp: React.FC<IAppProps> = (
     {
+        navigation,
         popularMovies,
         popularMoviesPhase,
         popularMoviesError,
@@ -64,6 +67,7 @@ const ContainerApp: React.FC<IAppProps> = (
 
     return (
         <ViewApp
+            navigation={navigation}
             popularMovies={popularMovies}
             popularMoviesPhase={popularMoviesPhase}
             popularMoviesError={popularMoviesError}
@@ -98,6 +102,10 @@ const ContainerApp: React.FC<IAppProps> = (
             performCallGetImageConfigRequest={performCallGetImageConfigRequest}
         />
     )
+}
+
+interface IOwnProps {
+    navigation: StackNavigationProp<RootStackParamList, 'Main'>,
 }
 
 interface IStateProps {
@@ -146,7 +154,7 @@ interface IDispatchProps {
     performCallGetImageConfigRequest: () => void,
 }
 
-export type IAppProps = IStateProps & IDispatchProps
+export type IAppProps = IOwnProps & IStateProps & IDispatchProps
 
 const mapStateToProps = (state: Models.IRootState): IStateProps => ({
     popularMovies: state.popularMovies,
