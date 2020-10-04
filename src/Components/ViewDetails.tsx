@@ -75,11 +75,11 @@ const renderContent = (
                     </View>
                 </ScrollView>
             </SafeAreaView>
-            <ViewVideoPlayer
-                isVisible={isModalVideoPlayerVisible}
-                performModalVideoPlayerHide={performModalVideoPlayerHide}
-            />
-        </>
+        <ViewVideoPlayer
+        isVisible={isModalVideoPlayerVisible}
+        performModalVideoPlayerHide={performModalVideoPlayerHide}
+    />
+    </>
     )
 }
 
