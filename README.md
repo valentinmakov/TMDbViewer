@@ -7,6 +7,8 @@ Every item in list is tappable. When tapped an item prompts navigation to a Deta
 
 The play button in Details screen calls a full screen video player equiped with custom playback controls. The vido clip is hardcoded whithin the app. The cross button in the top left part of the screen closes the video player.
 
+The project is powered by React Native and is fully written with TypeScript. Use `run tsc` command to check if there are TypeScript errors in the project.
+
 ## Installation
 1. Clone the repo
 2. Enter the project folder and run `npm run deploy` command. It will install npm and Pod dependencies
