@@ -13,6 +13,11 @@ export namespace Enums {
     export type ImageSizeType = (
         'CarouselLarge' | 'CarouselSmall' | 'Details'
     )
+
+    // Variants of asset type
+    export type AssetType = (
+        'Movie' | 'TV'
+    )
 }
 
 export namespace Models {

@@ -14,12 +14,14 @@ import {createStackNavigator} from '@react-navigation/stack'
 import store from './src/Store/store'
 import ContainerApp from './src/Containers/ContainerApp'
 import ContainerDetails from './src/Containers/ContainerDetails'
+import {Enums} from './src/Models/models'
 
 export type RootStackParamList = {
     Main: undefined,
     Details: {
         id: number,
         title: string,
+        type: Enums.AssetType,
     },
 }
 

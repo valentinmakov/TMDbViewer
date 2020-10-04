@@ -135,6 +135,7 @@ const renderBody = (
                                     {
                                         id: movie.id,
                                         title: movie.title,
+                                        type: 'Movie',
                                     }
                                 ),
                             }))
@@ -165,6 +166,7 @@ const renderBody = (
                                     {
                                         id: movie.id,
                                         title: movie.title,
+                                        type: 'Movie',
                                     }
                                 ),
                             }))
@@ -198,6 +200,7 @@ const renderBody = (
                                     {
                                         id: movie.id,
                                         title: movie.title,
+                                        type: 'Movie',
                                     }
                                 ),
                             }))
@@ -234,6 +237,7 @@ const renderBody = (
                                     {
                                         id: tv.id,
                                         title: tv.title,
+                                        type: 'TV',
                                     }
                                 ),
                             }))
@@ -264,6 +268,7 @@ const renderBody = (
                                     {
                                         id: tv.id,
                                         title: tv.title,
+                                        type: 'TV',
                                     }
                                 ),
                             }))
@@ -297,6 +302,7 @@ const renderBody = (
                                     {
                                         id: tv.id,
                                         title: tv.title,
+                                        type: 'TV',
                                     }
                                 ),
                             }))
