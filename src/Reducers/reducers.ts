@@ -37,6 +37,10 @@ const initialState: Models.IRootState = {
     imageConfig: null,
     imageConfigPhase: 'Never',
     imageConfigError: null,
+
+    details: null,
+    detailsPhase: 'Never',
+    detailsError: null,
 }
 
 const rootReducer = (state: Models.IRootState = initialState, action: Models.IAction): Models.IRootState => {
@@ -246,6 +250,25 @@ const rootReducer = (state: Models.IRootState = initialState, action: Models.IAc
                 ...state,
                 imageConfigPhase: 'Failure',
                 imageConfigError: action.payload as Models.IError,
+            }
+
+        case actions.CALL_GET_DETAILS_REQUEST:
+            return {
+                ...state,
+                detailsPhase: 'InProgress',
+            }
+        case actions.CALL_GET_DETAILS_SUCESS:
+            return {
+                ...state,
+                details: action.payload as Models.IDetails,
+                detailsPhase: 'Success',
+                detailsError: null,
+            }
+        case actions.CALL_GET_DETAILS_FAILURE:
+            return {
+                ...state,
+                detailsPhase: 'Failure',
+                detailsError: action.payload as Models.IError,
             }
         default:
             return state

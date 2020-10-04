@@ -72,6 +72,16 @@ export const getCallGetImageConfigUrl = (): string => {
 }
 
 /**
+ * Returns URL for movie or TV details query
+ * @param type 
+ * @param id 
+ */
+export const getCallDetailsUrl = (type: Enums.AssetType, id: number): string => {
+    const urlType: string = type === 'Movie' ? '/movie/' : '/tv/'
+    return `${baseUrl}${urlType}${id}?api_key=${apiKey}`
+}
+
+/**
  * Returns screen width for portrait mode, or screen height for landscape mode
  */
 export const getScreenWidth = (): number => {
@@ -185,4 +195,15 @@ export const getDocumentaryGenreId = (genreList: Models.IGenreList | null): Mode
     }
 
     return genreList.data.find((genre: Models.IGenre): boolean => genre.genre.toLowerCase() === 'documentary')
+}
+
+/**
+ * Extracts error message fromn error object
+ * @param error 
+ */
+export const getErrorMessage = (error: Models.IError): string => {
+    const code: string = error.code ? `Code: ${error.code}. ` : ''
+    const comment: string = error.comment ? ` ${error.comment}`: ''
+
+    return `${code}${error.message}${comment}`
 }

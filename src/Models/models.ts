@@ -58,6 +58,10 @@ export namespace Models {
         imageConfig: IImageConfig | null,
         imageConfigPhase: Enums.NetworkCallPhase,
         imageConfigError: IError | null,
+
+        details: IDetails | null,
+        detailsPhase: Enums.NetworkCallPhase,
+        detailsError: IError | null,
     }
 
     /* START Models for Actions */
@@ -71,7 +75,8 @@ export namespace Models {
         IMovieList |
         ITVProgramList |
         IGenreList |
-        IImageConfig
+        IImageConfig |
+        IDetails
     )
     /* END Models for Actions */
 
@@ -185,4 +190,24 @@ export namespace Models {
         imageDetailsWidthId: string,
     }
     /* END Models for converted /configuration REST response */
+
+    /* START Models for /movie and /tv REST response */
+    export interface IDetailsResponse {
+        id?: number,
+        name?: string,
+        title?: string,
+        overview?: string,
+        poster_path: string | null,
+    }
+    /* END Models for /movie and /tv REST response */
+
+    /* START Models for converted /movie and /tv REST response */
+    export interface IDetails {
+        type: Enums.AssetType,
+        id: number,
+        title: string,
+        description: string,
+        imageUrl: string | null,
+    }
+    /* END Models for converted /movie and /tv REST response */
 }

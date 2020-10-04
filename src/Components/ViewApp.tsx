@@ -41,17 +41,10 @@ const isEverythingLoading = (
     )
 }
 
-const getErrorMessage = (error: Models.IError): string => {
-    const code: string = error.code ? `Code: ${error.code}. ` : ''
-    const comment: string = error.comment ? ` ${error.comment}`: ''
-
-    return `${code}${error.message}${comment}`
-}
-
 const renderLoader = (): React.ReactElement<View> => {
     return (
         <View style={styles.activityIndicatorContainer}>
-            <ActivityIndicator/>
+            <ActivityIndicator color={'#FFF'}/>
         </View>
     )
 }
@@ -68,7 +61,7 @@ const renderError = (
         <Carousel
             type={isLarge ? 'LargeError' : 'SmallError'}
             itemList={[{
-                title: `${error ? getErrorMessage(error) : ''}`,
+                title: `${error ? util.getErrorMessage(error) : ''}`,
                 imageSource: '',
                 onPress: () => null,
             }]}

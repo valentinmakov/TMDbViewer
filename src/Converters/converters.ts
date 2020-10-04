@@ -140,3 +140,25 @@ export const convertImageConfigResponse = (response: Models.IImageConfigResponse
 
     return result
 }
+
+export const convertDetailsResponse = (response: Models.IDetailsResponse): Models.IDetails => {
+    if (
+        typeof response.id !== 'number' ||
+        (typeof response.name !== 'string' && typeof response.title !== 'string') ||
+        typeof response.overview !== 'string' ||
+        (response.poster_path !== null && typeof response.poster_path !== 'string')
+    ) {
+        throw new Error('Converter error')
+    }
+
+    const result: Models.IDetails = {
+        type: response.name ? 'TV' : 'Movie',
+        id: response.id,
+        title: response.name ? response.name :
+            response.title ? response.title : '',
+        description: response.overview,
+        imageUrl: response.poster_path,
+    }
+
+    return result
+}

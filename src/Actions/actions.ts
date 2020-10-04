@@ -1,4 +1,4 @@
-import {Models} from '../Models/models'
+import {Enums, Models} from '../Models/models'
 import * as util from '../Utilities/utilities'
 import * as converters from '../Converters/converters'
 
@@ -37,6 +37,10 @@ export const CALL_GET_DOCUMENTARY_TV_PROGRAM_LIST_FAILURE = 'CALL_GET_DOCUMENTAR
 export const CALL_GET_IMAGE_CONFIG_REQUEST = 'CALL_GET_IMAGE_CONFIG_REQUEST'
 export const CALL_GET_IMAGE_CONFIG_SUCESS = 'CALL_GET_IMAGE_CONFIG_SUCESS'
 export const CALL_GET_IMAGE_CONFIG_FAILURE = 'CALL_GET_IMAGE_CONFIG_FAILURE'
+
+export const CALL_GET_DETAILS_REQUEST = 'CALL_GET_DETAILS_REQUEST'
+export const CALL_GET_DETAILS_SUCESS = 'CALL_GET_DETAILS_SUCESS'
+export const CALL_GET_DETAILS_FAILURE = 'CALL_GET_DETAILS_FAILURE'
 
 /* START Popular movies actions */
 
@@ -601,3 +605,62 @@ const callGetImageConfigFailure = (payload: Models.IError): Models.IAction => ({
     payload,
 })
 /* END Image configuration actions */
+
+/* START Details actions */
+
+/**
+ * Starts query for details
+ */
+export const performCallGetDetailsRequest = (type: Enums.AssetType, id: number) => (dispatch: Function, getState: () => Models.IRootState): void => {
+    const rootState: Models.IRootState = getState()
+    // Cancel request if already in progress
+    if (rootState.detailsPhase === 'InProgress') {
+        return
+    }
+    // Cancel request if data for requested asset is already present in store
+    if (rootState.details && rootState.details.type === type && rootState.details.id === id) {
+        return
+    }
+    dispatch(callGetDetailsRequest())
+
+    fetch(util.getCallDetailsUrl(type, id), {method: 'GET'})
+        .then((response: Response): Promise<any> => response.json())
+        .then((json: any): void => {
+            // If falsy answer returns error is dispatched
+            if (json.success === false) {
+                const error: Models.IError = {
+                    code: json.status_code ? json.status_code : undefined,
+                    message: json.status_message ? `Details error: ${json.status_message}` : '',
+                }
+
+                dispatch(callGetDetailsFailure(error))
+                return
+            }
+            // Here we try to convert response to the app's internal model
+            // If response is invalid and converation failed error will be passed to the catch block
+            try {
+                const payload: Models.IDetails = converters.convertDetailsResponse(json)
+                dispatch(callGetDetailsSuccess(payload))
+            } catch(error: any) {
+                dispatch(callGetDetailsFailure({message: `Details converter error`}))
+            }
+        })
+        .catch((error: any): void => {
+            dispatch(callGetDetailsFailure(error))
+        })
+}
+
+const callGetDetailsRequest = (): Models.IAction => ({
+    type: CALL_GET_DETAILS_REQUEST,
+})
+
+const callGetDetailsSuccess = (payload: Models.IDetails): Models.IAction => ({
+    type: CALL_GET_DETAILS_SUCESS,
+    payload,
+})
+
+const callGetDetailsFailure = (payload: Models.IError): Models.IAction => ({
+    type: CALL_GET_DETAILS_FAILURE,
+    payload,
+})
+/* END Details actions */
