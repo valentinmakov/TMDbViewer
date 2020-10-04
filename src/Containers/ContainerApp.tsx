@@ -43,13 +43,23 @@ const ContainerApp: React.FC<IAppProps> = (
         performCallGetImageConfigRequest,
     }: IAppProps
 ): React.ReactElement<IAppProps> => {
-    // Performs network queries on mount
+    // Send initial requests on first mount
     useEffect(() => {
-        performCallGetPopularMovieListRequest()
-        performCallGetPopularTVProgramListRequest()
-        performCallGetMovieGenreListRequest()
-        performCallGetTVProgramGenreListRequest()
-        performCallGetImageConfigRequest()
+        if (popularMoviesPhase === 'Never') {
+            performCallGetPopularMovieListRequest()
+        }
+        if (popularTVProgramsPhase === 'Never') {
+            performCallGetPopularTVProgramListRequest()
+        }
+        if (movieGenresPhase === 'Never') {
+            performCallGetMovieGenreListRequest()
+        }
+        if (tvProgramGenresPhase === 'Never') {
+            performCallGetTVProgramGenreListRequest()
+        }
+        if (imageConfigPhase === 'Never') {
+            performCallGetImageConfigRequest()
+        }
     }, [])
 
     return (
