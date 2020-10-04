@@ -1,6 +1,7 @@
 import React from 'react'
 import {
     ActivityIndicator,
+    SafeAreaView,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -108,214 +109,216 @@ const renderBody = (
     }: IAppProps
 ): React.ReactElement<ScrollView> => {
     return (
-        <ScrollView
-            style={styles.container}
-            directionalLockEnabled={true}
-        >
-            {/* Movies section */}
-            <Text style={styles.title}>Movies</Text>
-            <Text style={styles.subTitle}>Most popular</Text>
-            {
-                popularMovies && imageConfig
-                    ? <Carousel
-                        type={'Large'}
-                        itemList={
-                            popularMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
-                                title: movie.title,
-                                imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
-                                onPress: () => navigation.navigate(
-                                    'Details',
-                                    {
-                                        id: movie.id,
-                                        title: movie.title,
-                                        type: 'Movie',
-                                    }
-                                ),
-                            }))
-                        }
-                        onEndReached={() => performCallGetPopularMovieListRequest()}
-                    />
-                    : popularMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView
+                style={styles.container}
+                directionalLockEnabled={true}
+            >
+                {/* Movies section */}
+                <Text style={styles.title}>Movies</Text>
+                <Text style={styles.subTitle}>Most popular</Text>
+                {
+                    popularMovies && imageConfig
                         ? <Carousel
-                            type={'LargeShimmer'}
-                            itemList={[]}
-                            onEndReached={() => null}
+                            type={'Large'}
+                            itemList={
+                                popularMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
+                                    title: movie.title,
+                                    imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
+                                    onPress: () => navigation.navigate(
+                                        'Details',
+                                        {
+                                            id: movie.id,
+                                            title: movie.title,
+                                            type: 'Movie',
+                                        }
+                                    ),
+                                }))
+                            }
+                            onEndReached={() => performCallGetPopularMovieListRequest()}
                         />
-                        : popularMoviesError || imageConfigError
-                            ? renderError(popularMoviesError || imageConfigError, true)
-                            : null
-            }
-            <Text style={styles.subTitle}>Family</Text>
-            {
-                familyMovies && imageConfig
-                    ? <Carousel
-                        type={'Small'}
-                        itemList={
-                            familyMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
-                                title: movie.title,
-                                imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
-                                onPress: () => navigation.navigate(
-                                    'Details',
-                                    {
-                                        id: movie.id,
-                                        title: movie.title,
-                                        type: 'Movie',
-                                    }
-                                ),
-                            }))
-                        }
-                        onEndReached={() => {
-                            const familyGenre: Models.IGenre | undefined = util.getFamilyGenreId(movieGenres)
-                            familyGenre ? performCallGetPopularMovieListRequest(({genre: 'Family', id: familyGenre.id})) : null}
-                        }
-                    />
-                    : familyMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        : popularMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                            ? <Carousel
+                                type={'LargeShimmer'}
+                                itemList={[]}
+                                onEndReached={() => null}
+                            />
+                            : popularMoviesError || imageConfigError
+                                ? renderError(popularMoviesError || imageConfigError, true)
+                                : null
+                }
+                <Text style={styles.subTitle}>Family</Text>
+                {
+                    familyMovies && imageConfig
                         ? <Carousel
-                            type={'SmallShimmer'}
-                            itemList={[]}
-                            onEndReached={() => null}
+                            type={'Small'}
+                            itemList={
+                                familyMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
+                                    title: movie.title,
+                                    imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
+                                    onPress: () => navigation.navigate(
+                                        'Details',
+                                        {
+                                            id: movie.id,
+                                            title: movie.title,
+                                            type: 'Movie',
+                                        }
+                                    ),
+                                }))
+                            }
+                            onEndReached={() => {
+                                const familyGenre: Models.IGenre | undefined = util.getFamilyGenreId(movieGenres)
+                                familyGenre ? performCallGetPopularMovieListRequest(({genre: 'Family', id: familyGenre.id})) : null}
+                            }
                         />
-                        : familyMoviesError || imageConfigError || movieGenresError
-                            ? renderError(familyMoviesError || imageConfigError || movieGenresError, false)
-                            : null
-            }
-            <Text style={styles.subTitle}>Documentary</Text>
-            {
-                documentaryMovies && imageConfig
-                    ? <Carousel
-                        type={'Small'}
-                        itemList={
-                            documentaryMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
-                                title: movie.title,
-                                imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
-                                onPress: () => navigation.navigate(
-                                    'Details',
-                                    {
-                                        id: movie.id,
-                                        title: movie.title,
-                                        type: 'Movie',
-                                    }
-                                ),
-                            }))
-                        }
-                        onEndReached={() => {
-                            const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(movieGenres)
-                            documentaryGenre ? performCallGetPopularMovieListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
-                        }
-                    />
-                    : documentaryMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        : familyMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                            ? <Carousel
+                                type={'SmallShimmer'}
+                                itemList={[]}
+                                onEndReached={() => null}
+                            />
+                            : familyMoviesError || imageConfigError || movieGenresError
+                                ? renderError(familyMoviesError || imageConfigError || movieGenresError, false)
+                                : null
+                }
+                <Text style={styles.subTitle}>Documentary</Text>
+                {
+                    documentaryMovies && imageConfig
                         ? <Carousel
-                            type={'SmallShimmer'}
-                            itemList={[]}
-                            onEndReached={() => null}
+                            type={'Small'}
+                            itemList={
+                                documentaryMovies.movieList.map((movie: Models.IMovie): ICarouselItem => ({
+                                    title: movie.title,
+                                    imageSource: movie.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, movie.imageUrl) : '',
+                                    onPress: () => navigation.navigate(
+                                        'Details',
+                                        {
+                                            id: movie.id,
+                                            title: movie.title,
+                                            type: 'Movie',
+                                        }
+                                    ),
+                                }))
+                            }
+                            onEndReached={() => {
+                                const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(movieGenres)
+                                documentaryGenre ? performCallGetPopularMovieListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
+                            }
                         />
-                        : documentaryMoviesError || imageConfigError || movieGenresError
-                            ? renderError(documentaryMoviesError || imageConfigError || movieGenresError, false)
-                            : null
-            }
+                        : documentaryMoviesPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                            ? <Carousel
+                                type={'SmallShimmer'}
+                                itemList={[]}
+                                onEndReached={() => null}
+                            />
+                            : documentaryMoviesError || imageConfigError || movieGenresError
+                                ? renderError(documentaryMoviesError || imageConfigError || movieGenresError, false)
+                                : null
+                }
 
-            {/* TV section */}
-            <Text style={styles.title}>TV Series</Text>
-            <Text style={styles.subTitle}>Most popular</Text>
-            {
-                popularTVPrograms && imageConfig
-                    ? <Carousel
-                        type={'Large'}
-                        itemList={
-                            popularTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
-                                title: tv.title,
-                                imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
-                                onPress: () => navigation.navigate(
-                                    'Details',
-                                    {
-                                        id: tv.id,
-                                        title: tv.title,
-                                        type: 'TV',
-                                    }
-                                ),
-                            }))
-                        }
-                        onEndReached={() => performCallGetPopularTVProgramListRequest()}
-                    />
-                    : popularTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                {/* TV section */}
+                <Text style={styles.title}>TV Series</Text>
+                <Text style={styles.subTitle}>Most popular</Text>
+                {
+                    popularTVPrograms && imageConfig
                         ? <Carousel
-                            type={'LargeShimmer'}
-                            itemList={[]}
-                            onEndReached={() => null}
+                            type={'Large'}
+                            itemList={
+                                popularTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
+                                    title: tv.title,
+                                    imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
+                                    onPress: () => navigation.navigate(
+                                        'Details',
+                                        {
+                                            id: tv.id,
+                                            title: tv.title,
+                                            type: 'TV',
+                                        }
+                                    ),
+                                }))
+                            }
+                            onEndReached={() => performCallGetPopularTVProgramListRequest()}
                         />
-                        : popularTVProgramsError || imageConfigError || tvProgramGenresError
-                            ? renderError(popularTVProgramsError || imageConfigError || tvProgramGenresError, true)
-                            : null
-            }
-            <Text style={styles.subTitle}>Family</Text>
-            {
-                familyTVPrograms && imageConfig
-                    ? <Carousel
-                        type={'Small'}
-                        itemList={
-                            familyTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
-                                title: tv.title,
-                                imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
-                                onPress: () => navigation.navigate(
-                                    'Details',
-                                    {
-                                        id: tv.id,
-                                        title: tv.title,
-                                        type: 'TV',
-                                    }
-                                ),
-                            }))
-                        }
-                        onEndReached={() => {
-                            const familyGenre: Models.IGenre | undefined = util.getFamilyGenreId(tvProgramGenres)
-                            familyGenre ? performCallGetPopularTVProgramListRequest(({genre: 'Family', id: familyGenre.id})) : null}
-                        }
-                    />
-                    : familyTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        : popularTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                            ? <Carousel
+                                type={'LargeShimmer'}
+                                itemList={[]}
+                                onEndReached={() => null}
+                            />
+                            : popularTVProgramsError || imageConfigError || tvProgramGenresError
+                                ? renderError(popularTVProgramsError || imageConfigError || tvProgramGenresError, true)
+                                : null
+                }
+                <Text style={styles.subTitle}>Family</Text>
+                {
+                    familyTVPrograms && imageConfig
                         ? <Carousel
-                            type={'SmallShimmer'}
-                            itemList={[]}
-                            onEndReached={() => null}
+                            type={'Small'}
+                            itemList={
+                                familyTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
+                                    title: tv.title,
+                                    imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
+                                    onPress: () => navigation.navigate(
+                                        'Details',
+                                        {
+                                            id: tv.id,
+                                            title: tv.title,
+                                            type: 'TV',
+                                        }
+                                    ),
+                                }))
+                            }
+                            onEndReached={() => {
+                                const familyGenre: Models.IGenre | undefined = util.getFamilyGenreId(tvProgramGenres)
+                                familyGenre ? performCallGetPopularTVProgramListRequest(({genre: 'Family', id: familyGenre.id})) : null}
+                            }
                         />
-                        : familyTVProgramsError || imageConfigError || tvProgramGenresError
-                            ? renderError(familyTVProgramsError || imageConfigError || tvProgramGenresError, false)
-                            : null
-            }
-            <Text style={styles.subTitle}>Documentary</Text>
-            {
-                documentaryTVPrograms && imageConfig
-                    ? <Carousel
-                        type={'Small'}
-                        itemList={
-                            documentaryTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
-                                title: tv.title,
-                                imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
-                                onPress: () => navigation.navigate(
-                                    'Details',
-                                    {
-                                        id: tv.id,
-                                        title: tv.title,
-                                        type: 'TV',
-                                    }
-                                ),
-                            }))
-                        }
-                        onEndReached={() => {
-                            const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(movieGenres)
-                            documentaryGenre ? performCallGetPopularTVProgramListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
-                        }
-                    />
-                    : documentaryTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                        : familyTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                            ? <Carousel
+                                type={'SmallShimmer'}
+                                itemList={[]}
+                                onEndReached={() => null}
+                            />
+                            : familyTVProgramsError || imageConfigError || tvProgramGenresError
+                                ? renderError(familyTVProgramsError || imageConfigError || tvProgramGenresError, false)
+                                : null
+                }
+                <Text style={styles.subTitle}>Documentary</Text>
+                {
+                    documentaryTVPrograms && imageConfig
                         ? <Carousel
-                            type={'SmallShimmer'}
-                            itemList={[]}
-                            onEndReached={() => null}
+                            type={'Small'}
+                            itemList={
+                                documentaryTVPrograms.tvList.map((tv: Models.ITV): ICarouselItem => ({
+                                    title: tv.title,
+                                    imageSource: tv.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageCarouselLargeWidthId, tv.imageUrl) : '',
+                                    onPress: () => navigation.navigate(
+                                        'Details',
+                                        {
+                                            id: tv.id,
+                                            title: tv.title,
+                                            type: 'TV',
+                                        }
+                                    ),
+                                }))
+                            }
+                            onEndReached={() => {
+                                const documentaryGenre: Models.IGenre | undefined = util.getDocumentaryGenreId(movieGenres)
+                                documentaryGenre ? performCallGetPopularTVProgramListRequest(({genre: 'Documentary', id: documentaryGenre.id})) : null}
+                            }
                         />
-                        : documentaryTVProgramsError || imageConfigError || tvProgramGenresError
-                            ? renderError(documentaryTVProgramsError || imageConfigError || tvProgramGenresError, false)
-                            : null
-            }
-        </ScrollView>
+                        : documentaryTVProgramsPhase === 'InProgress' || imageConfigPhase === 'InProgress'
+                            ? <Carousel
+                                type={'SmallShimmer'}
+                                itemList={[]}
+                                onEndReached={() => null}
+                            />
+                            : documentaryTVProgramsError || imageConfigError || tvProgramGenresError
+                                ? renderError(documentaryTVProgramsError || imageConfigError || tvProgramGenresError, false)
+                                : null
+                }
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
@@ -359,6 +362,10 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginLeft: 14,
         marginBottom: 10,
+    },
+    safeArea: {
+        backgroundColor: '#000',
+        flex: 1,
     },
 })
 

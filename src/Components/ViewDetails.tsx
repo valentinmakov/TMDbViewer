@@ -1,6 +1,7 @@
 import React from 'react'
 import {
     ActivityIndicator,
+    SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
@@ -40,21 +41,23 @@ const renderContent = (
     }
 
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.imageContainer}>
-                <FastImage
-                    style={styles.image}
-                    source={{uri: details.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageDetailsWidthId, details.imageUrl) : ''}}
-                    resizeMode={FastImage.resizeMode.cover}
-                />
-            </View>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>{details.title}</Text>
-            </View>
-            <View style={styles.descriptionContainer}>
-                <Text style={styles.description}>{details.description}</Text>
-            </View>
-        </ScrollView>
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView style={styles.container}>
+                <View style={styles.imageContainer}>
+                    <FastImage
+                        style={styles.image}
+                        source={{uri: details.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageDetailsWidthId, details.imageUrl) : ''}}
+                        resizeMode={FastImage.resizeMode.cover}
+                    />
+                </View>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>{details.title}</Text>
+                </View>
+                <View style={styles.descriptionContainer}>
+                    <Text style={styles.description}>{details.description}</Text>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
@@ -120,6 +123,10 @@ const styles = StyleSheet.create({
     description: {
         color: '#FFF',
         fontSize: 17,
+    },
+    safeArea: {
+        backgroundColor: '#000',
+        flex: 1,
     },
 })
 
