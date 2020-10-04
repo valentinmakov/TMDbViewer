@@ -125,12 +125,11 @@ export const convertImageConfigResponse = (response: Models.IImageConfigResponse
         throw new Error('Converter error')
     }
 
-    // Id's for image size picked based on screen dimentions
-    const screenWidth: number = util.getScreenWidth()
+    // Id's for images of different sizes picked
     const imageWidthList: number[] = util.getImageWidthList(response.images)
-    const imageCarouselLargeWidthId: string = util.getImageWidthId(screenWidth, imageWidthList, response.images, 'CarouselBig')
-    const imageCarouselSmallWidthId: string = util.getImageWidthId(screenWidth, imageWidthList, response.images, 'CarouselSmall')
-    const imageDetailsWidthId: string = util.getImageWidthId(screenWidth, imageWidthList, response.images, 'Details')
+    const imageCarouselLargeWidthId: string = util.getImageWidthId(imageWidthList, response.images, 'CarouselLarge')
+    const imageCarouselSmallWidthId: string = util.getImageWidthId(imageWidthList, response.images, 'CarouselSmall')
+    const imageDetailsWidthId: string = util.getImageWidthId(imageWidthList, response.images, 'Details')
 
     const result: Models.IImageConfig = {
         imageBaseUrl: response.images && response.images.secure_base_url ? response.images.secure_base_url : '',

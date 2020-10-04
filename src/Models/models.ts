@@ -11,7 +11,7 @@ export namespace Enums {
 
     // Variants of image size
     export type ImageSizeType = (
-        'CarouselBig' | 'CarouselSmall' | 'Details'
+        'CarouselLarge' | 'CarouselSmall' | 'Details'
     )
 }
 

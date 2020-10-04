@@ -1,8 +1,12 @@
 import {Dimensions} from 'react-native'
 import { Enums, Models } from 'src/Models/models'
 
+/* START Constants */
 const baseUrl = 'https://api.themoviedb.org/3'
 const apiKey = '3f1d16dca1fe0960f57d1ecd74e243fb'
+const carouselLargeImageWidth = 200
+const carouselSmallImageWidth = 120
+/* END Constants */
 
 /**
  * Returns URL for popular movies query
@@ -101,7 +105,6 @@ export const getImageWidthList = (images: Models.IImageConfigDataResponse | unde
  * @param imageSize 
  */
 export const getImageWidthId = (
-    screenWidth: number,
     imageWidthList: number[],
     images: Models.IImageConfigDataResponse | undefined,
     imageSize: Enums.ImageSizeType,
@@ -110,34 +113,31 @@ export const getImageWidthId = (
         return ''
     }
 
-    // Sets how many images must be contained in a row in portrait mode 
-    let imageSizeRaio: number
+    // Sets referential width for carousel and details screen images 
+    let maxImageSize: number
 
-    switch(imageSize) {
-        case 'CarouselBig':
-            imageSizeRaio = 2
+    switch (imageSize) {
+        case 'CarouselLarge':
+            maxImageSize = carouselLargeImageWidth
             break
         case 'CarouselSmall':
-            imageSizeRaio = 3
+            maxImageSize = carouselSmallImageWidth
             break
         case 'Details':
         default:
-            imageSizeRaio = 1
+            maxImageSize = getScreenWidth()
     }
 
-    // Picking the most suitable image size based on the screen width
-    // The assumption is that screen in portrait mode should contain two big carousel images,
-    // three small images and one detailed image in a row
-    // The image size might be slightly bigger than constraints in order to be of good quality
-    // For example of screen width is 414, then big carousel image must have at least 212 width or slightly bigger
-    // The ratio is set in imageSizeRaio variable
-    // The image size stays the same for the landscape mode
+    // Picking the most suitable download image size based on screen image type (carousels or details screen)
+    // The assumption is that downloaded image should be a bit larger than its phisical dimentions on screen
+    // (otherwise its screen quality might go bad)
+    // The image size is the same for both portrait and landscape modes
     let isMinWitdthFound = false
     const minImageWidth: number = imageWidthList.reduce((minImageWidth: number, imageWidth: number, index: number): number => {
         if (index === 0) {
             return imageWidth
         } else {
-            const sizeDifference: number = screenWidth / imageSizeRaio - imageWidth
+            const sizeDifference: number = maxImageSize - imageWidth
 
             if (sizeDifference <= 0 && !isMinWitdthFound) {
                 isMinWitdthFound = true
