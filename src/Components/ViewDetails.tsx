@@ -5,10 +5,12 @@ import {
     ScrollView,
     StyleSheet,
     Text,
+    TouchableOpacity,
     View,
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import {Models} from 'src/Models/models'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import {IDetailsProps} from '../Containers/ContainerDetails'
 import * as util from '../Utilities/utilities'
 
@@ -49,6 +51,13 @@ const renderContent = (
                         source={{uri: details.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageDetailsWidthId, details.imageUrl) : ''}}
                         resizeMode={FastImage.resizeMode.cover}
                     />
+                    <TouchableOpacity style={styles.playButton}>
+                    <Icon
+                        name={'play-arrow'}
+                        size={60}
+                        color={'#FFF'}
+                    />
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>{details.title}</Text>
@@ -127,6 +136,17 @@ const styles = StyleSheet.create({
     safeArea: {
         backgroundColor: '#000',
         flex: 1,
+    },
+    playButton: {
+        height: 80,
+        width: 80,
+        borderRadius: 40,
+        backgroundColor: 'blue',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: -40,
+        right: 60,
     },
 })
 
