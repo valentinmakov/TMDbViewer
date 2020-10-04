@@ -16,7 +16,10 @@ const ContainerDetails: React.FC<IDetailsProps> = (
         detailsPhase,
         detailsError,
         imageConfig,
+        isModalVideoPlayerVisible,
         performCallGetDetailsRequest,
+        performModalVideoPlayerShow,
+        performModalVideoPlayerHide,
     }: IDetailsProps
 ): React.ReactElement<IDetailsProps> => {
     // Send initial requests on first mount
@@ -31,7 +34,10 @@ const ContainerDetails: React.FC<IDetailsProps> = (
             detailsPhase={detailsPhase}
             detailsError={detailsError}
             imageConfig={imageConfig}
+            isModalVideoPlayerVisible={isModalVideoPlayerVisible}
             performCallGetDetailsRequest={performCallGetDetailsRequest}
+            performModalVideoPlayerShow={performModalVideoPlayerShow}
+            performModalVideoPlayerHide={performModalVideoPlayerHide}
         />
     )
 }
@@ -45,10 +51,13 @@ interface IStateProps {
     detailsPhase: Enums.NetworkCallPhase,
     detailsError: Models.IError | null,
     imageConfig: Models.IImageConfig | null,
+    isModalVideoPlayerVisible: boolean,
 }
 
 interface IDispatchProps {
     performCallGetDetailsRequest: (type: Enums.AssetType, id: number) => void,
+    performModalVideoPlayerShow: () => void,
+    performModalVideoPlayerHide: () => void,
 }
 
 export type IDetailsProps = IOwnProps & IStateProps & IDispatchProps
@@ -58,10 +67,13 @@ const mapStateToProps = (state: Models.IRootState): IStateProps => ({
     detailsPhase: state.detailsPhase,
     detailsError: state.detailsError,
     imageConfig: state.imageConfig,
+    isModalVideoPlayerVisible: state.isModalVideoPlayerVisible,
 })
 
 const mapDispatchToProps = (dispatch: Function): IDispatchProps => ({
-    performCallGetDetailsRequest: (type: Enums.AssetType, id: number): void => dispatch(actions.performCallGetDetailsRequest(type, id))
+    performCallGetDetailsRequest: (type: Enums.AssetType, id: number): void => dispatch(actions.performCallGetDetailsRequest(type, id)),
+    performModalVideoPlayerShow: (): void => dispatch(actions.performModalVideoPlayerShow()),
+    performModalVideoPlayerHide: (): void => dispatch(actions.performModalVideoPlayerHide()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContainerDetails)

@@ -62,6 +62,8 @@ export namespace Models {
         details: IDetails | null,
         detailsPhase: Enums.NetworkCallPhase,
         detailsError: IError | null,
+
+        isModalVideoPlayerVisible: boolean,
     }
 
     /* START Models for Actions */

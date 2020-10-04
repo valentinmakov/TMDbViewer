@@ -13,6 +13,7 @@ import {Models} from 'src/Models/models'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {IDetailsProps} from '../Containers/ContainerDetails'
 import * as util from '../Utilities/utilities'
+import ViewVideoPlayer from './ViewVideoPlayer'
 
 const imageHeightRatio = 1.5
 
@@ -37,36 +38,48 @@ const renderError = (error: Models.IError): React.ReactElement<View> => {
 const renderContent = (
     details: Models.IDetails | null,
     imageConfig: Models.IImageConfig | null,
+    isModalVideoPlayerVisible: boolean,
+    performModalVideoPlayerShow: () => void,
+    performModalVideoPlayerHide: () => void,
 ): React.ReactElement<View> | null => {
     if (!details || !imageConfig) {
         return null
     }
 
     return (
-        <SafeAreaView style={styles.safeArea}>
-            <ScrollView style={styles.container}>
-                <View style={styles.imageContainer}>
-                    <FastImage
-                        style={styles.image}
-                        source={{uri: details.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageDetailsWidthId, details.imageUrl) : ''}}
-                        resizeMode={FastImage.resizeMode.cover}
-                    />
-                    <TouchableOpacity style={styles.playButton}>
-                    <Icon
-                        name={'play-arrow'}
-                        size={60}
-                        color={'#FFF'}
-                    />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.titleContainer}>
-                    <Text style={styles.title}>{details.title}</Text>
-                </View>
-                <View style={styles.descriptionContainer}>
-                    <Text style={styles.description}>{details.description}</Text>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+        <>
+            <SafeAreaView style={styles.safeArea}>
+                <ScrollView style={styles.container}>
+                    <View style={styles.imageContainer}>
+                        <FastImage
+                            style={styles.image}
+                            source={{uri: details.imageUrl ? util.getImageUrl(imageConfig.imageBaseUrl, imageConfig.imageDetailsWidthId, details.imageUrl) : ''}}
+                            resizeMode={FastImage.resizeMode.cover}
+                        />
+                        <TouchableOpacity
+                            style={styles.playButton}
+                            onPress={() => performModalVideoPlayerShow()}
+                        >
+                            <Icon
+                                name={'play-arrow'}
+                                size={60}
+                                color={'#FFF'}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.titleContainer} pointerEvents={'none'}>
+                        <Text style={styles.title}>{details.title}</Text>
+                    </View>
+                    <View style={styles.descriptionContainer}>
+                        <Text style={styles.description}>{details.description}</Text>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+            <ViewVideoPlayer
+                isVisible={isModalVideoPlayerVisible}
+                performModalVideoPlayerHide={performModalVideoPlayerHide}
+            />
+        </>
     )
 }
 
@@ -79,6 +92,9 @@ const ViewDetails: React.FC<IDetailsProps> = (
         detailsPhase,
         detailsError,
         imageConfig,
+        isModalVideoPlayerVisible,
+        performModalVideoPlayerShow,
+        performModalVideoPlayerHide,
     }: IDetailsProps
 ): React.ReactElement<View> | null => {
     if (detailsPhase === 'InProgress' || detailsPhase === 'Never') {
@@ -89,7 +105,13 @@ const ViewDetails: React.FC<IDetailsProps> = (
         return renderError(detailsError)
     }
 
-    return renderContent(details, imageConfig)
+    return renderContent(
+        details,
+        imageConfig,
+        isModalVideoPlayerVisible,
+        performModalVideoPlayerShow,
+        performModalVideoPlayerHide,
+    )
 }
 
 const styles = StyleSheet.create({

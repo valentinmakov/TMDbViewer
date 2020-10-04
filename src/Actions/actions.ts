@@ -42,6 +42,10 @@ export const CALL_GET_DETAILS_REQUEST = 'CALL_GET_DETAILS_REQUEST'
 export const CALL_GET_DETAILS_SUCESS = 'CALL_GET_DETAILS_SUCESS'
 export const CALL_GET_DETAILS_FAILURE = 'CALL_GET_DETAILS_FAILURE'
 
+export const MODAL_VIDEO_PLAYER_SHOW = 'MODAL_VIDEO_PLAYER_SHOW'
+export const MODAL_VIDEO_PLAYER_HIDE = 'MODAL_VIDEO_PLAYER_HIDE'
+
+
 /* START Popular movies actions */
 
 /**
@@ -664,3 +668,13 @@ const callGetDetailsFailure = (payload: Models.IError): Models.IAction => ({
     payload,
 })
 /* END Details actions */
+
+/* START Video player modal actions */
+export const performModalVideoPlayerShow = (): Models.IAction => ({
+    type: MODAL_VIDEO_PLAYER_SHOW,
+})
+
+export const performModalVideoPlayerHide = (): Models.IAction => ({
+    type: MODAL_VIDEO_PLAYER_HIDE,
+})
+/* END Video player modal actions */

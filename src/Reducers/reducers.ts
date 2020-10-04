@@ -41,6 +41,8 @@ const initialState: Models.IRootState = {
     details: null,
     detailsPhase: 'Never',
     detailsError: null,
+
+    isModalVideoPlayerVisible: false,
 }
 
 const rootReducer = (state: Models.IRootState = initialState, action: Models.IAction): Models.IRootState => {
@@ -269,6 +271,17 @@ const rootReducer = (state: Models.IRootState = initialState, action: Models.IAc
                 ...state,
                 detailsPhase: 'Failure',
                 detailsError: action.payload as Models.IError,
+            }
+
+        case actions.MODAL_VIDEO_PLAYER_SHOW:
+            return {
+                ...state,
+                isModalVideoPlayerVisible: true,
+            }
+        case actions.MODAL_VIDEO_PLAYER_HIDE:
+            return {
+                ...state,
+                isModalVideoPlayerVisible: false,
             }
         default:
             return state
