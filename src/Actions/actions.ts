@@ -55,6 +55,11 @@ export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId)
 
         const currentPage: number = rootState.popularMovies ? rootState.popularMovies.currentPage : 0
     
+        // If all pages are loaded no query is sent
+        if (rootState.popularMovies && currentPage === rootState.popularMovies.totalPages) {
+            return
+        }
+
         // Query url formed based on the current page value
         fetch(util.getCallGetPopularMovieListUrl(currentPage), {method: 'GET'})
             .then((response: Response): Promise<any> => response.json())
@@ -92,6 +97,11 @@ export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId)
 
         const currentPage: number = rootState.familyMovies ? rootState.familyMovies.currentPage : 0
     
+        // If all pages are loaded no query is sent
+        if (rootState.familyMovies && currentPage === rootState.familyMovies.totalPages) {
+            return
+        }
+
         // Query url formed based on the current page and genre id values
         fetch(util.getCallGetMovieByGenreListUrl(currentPage, genreId.id), {method: 'GET'})
             .then((response: Response): Promise<any> => response.json())
@@ -128,6 +138,11 @@ export const performCallGetPopularMovieListRequest = (genreId?: Models.IGenreId)
         dispatch(callGetDocumentaryMovieListRequest())
 
         const currentPage: number = rootState.documentaryMovies ? rootState.documentaryMovies.currentPage : 0
+
+        // If all pages are loaded no query is sent
+        if (rootState.documentaryMovies && currentPage === rootState.documentaryMovies.totalPages) {
+            return
+        }
     
         // Query url formed based on the current page and genre id values
         fetch(util.getCallGetMovieByGenreListUrl(currentPage, genreId.id), {method: 'GET'})
@@ -190,6 +205,11 @@ export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenr
         dispatch(callGetPopularTVProgramListRequest())
 
         const currentPage: number = rootState.popularTVPrograms ? rootState.popularTVPrograms.currentPage : 0
+
+        // If all pages are loaded no query is sent
+        if (rootState.popularTVPrograms && currentPage === rootState.popularTVPrograms.totalPages) {
+            return
+        }
     
         // Query url formed based on the current page value
         fetch(util.getCallGetPopularTVProgramListUrl(currentPage), {method: 'GET'})
@@ -227,6 +247,11 @@ export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenr
         dispatch(callGetFamilyTVProgramListRequest())
 
         const currentPage: number = rootState.familyTVPrograms ? rootState.familyTVPrograms.currentPage : 0
+
+        // If all pages are loaded no query is sent
+        if (rootState.familyTVPrograms && currentPage === rootState.familyTVPrograms.totalPages) {
+            return
+        }
     
         // Query url formed based on the current page and genre id values
         fetch(util.getCallGetTVProgramsByGenreListUrl(currentPage, genreId.id), {method: 'GET'})
@@ -264,6 +289,11 @@ export const performCallGetPopularTVProgramListRequest = (genreId?: Models.IGenr
         dispatch(callGetDocumentaryTVProgramListRequest())
 
         const currentPage: number = rootState.documentaryTVPrograms ? rootState.documentaryTVPrograms.currentPage : 0
+
+        // If all pages are loaded no query is sent
+        if (rootState.documentaryTVPrograms && currentPage === rootState.documentaryTVPrograms.totalPages) {
+            return
+        }
     
         // Query url formed based on the current page and genre id values
         fetch(util.getCallGetTVProgramsByGenreListUrl(currentPage, genreId.id), {method: 'GET'})
